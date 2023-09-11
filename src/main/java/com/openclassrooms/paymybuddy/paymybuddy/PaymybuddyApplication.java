@@ -11,3 +11,12 @@ public class PaymybuddyApplication {
 	}
 
 }
+/**
+ * Lancement de l'applicaton 
+ * connexion à la bdd
+ * creation de la database 
+ * initialiser son utilisation 
+ * crée les tables et implanter de fausse donnée
+ * 
+ * Controller
+ * */
