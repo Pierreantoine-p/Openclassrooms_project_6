@@ -1,11 +1,10 @@
 package com.openclassrooms.paymybuddy.paymybuddy.repository;
 
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
 
+import com.openclassrooms.paymybuddy.paymybuddy.model.SoldModel;
 import com.openclassrooms.paymybuddy.paymybuddy.model.UserModel;
 
-@Repository
-public interface UserRepository extends CrudRepository<UserModel, Integer> {
+public interface SoldRepository extends CrudRepository<SoldModel, Integer>{
 
 }

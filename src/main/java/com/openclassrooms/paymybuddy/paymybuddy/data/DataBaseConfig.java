@@ -1,26 +1,27 @@
 package com.openclassrooms.paymybuddy.paymybuddy.data;
 
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.core.config.ConfigurationException;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import com.openclassrooms.paymybuddy.paymybuddy.model.UserModel;
+import com.openclassrooms.paymybuddy.paymybuddy.service.UserService;
 
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.SQLException;
-
-import org.apache.logging.log4j.LogManager;
-
-@Configuration
-public class DataBaseConfig {
+@SpringBootApplication
+public class DataBaseConfig implements CommandLineRunner{
 	
-    private static final Logger logger = LogManager.getLogger(DataBaseConfig.class);
-    /*
-    @Bean
-    public Connection getConnection() throws ClassNotFoundException, SQLException, IOException, ConfigurationException{
-    	logger.info("Create DB connection");
-    	return("hello");
-    }
-    */
+	@Autowired
+	private UserService userService;
+
+	public static void main (String [] args) {
+		SpringApplication.run(DataBaseConfig.class, args);
+	}
+
+	@Override
+	public void run(String... args) throws Exception {	
+		Iterable<UserModel> users = userService.getAll();
+		users.forEach(user->
+		System.out.println(user.getUserMail()));
+	}
 
 }

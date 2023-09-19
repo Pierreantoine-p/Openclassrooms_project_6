@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class PaymybuddyApplication {
 
 	public static void main(String[] args) {
+		
 		SpringApplication.run(PaymybuddyApplication.class, args);
 	}
 
@@ -20,3 +21,5 @@ public class PaymybuddyApplication {
  * 
  * Controller
  * */
+
+//TODO : change name field sql 
