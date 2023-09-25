@@ -5,14 +5,14 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.1.3</version>
+		<version>3.1.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.openclassrooms.paymybuddy</groupId>
-	<artifactId>paymybuddy</artifactId>
+	<groupId>com.openclassrooms.paybybuddy</groupId>
+	<artifactId>paybybuddy</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>paymybuddy</name>
-	<description>App &quot;Pay My Buddy&quot;</description>
+	<name>paybybuddy</name>
+	<description>project spring boot for paybybuddy</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
@@ -24,15 +24,21 @@
 		<dependency>
 		    <groupId>mysql</groupId>
 		    <artifactId>mysql-connector-java</artifactId>
-		    <version>8.0.28</version> <!-- Remplacez cette version par la version de MySQL que vous utilisez -->
+		    <version>8.0.28</version>
 		</dependency>
-		<!-- <dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency> -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -48,34 +54,19 @@
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-core</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
+			<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-junit-jupiter</artifactId>
 			<scope>test</scope>
 		</dependency>
-		
-		  <dependency>
+		<dependency>
 	        <groupId>org.springframework.boot</groupId>
 	        <artifactId>spring-boot-starter-parent</artifactId>
-	        <version>2.5.4</version> <!-- Utilisez la version Spring Boot la plus récente -->
+	        <version>2.5.4</version> 
 	        <type>pom</type>
-	    </dependency>   
+	    </dependency> 
 	</dependencies>
+
 	<build>
 		<plugins>
 			<plugin>
