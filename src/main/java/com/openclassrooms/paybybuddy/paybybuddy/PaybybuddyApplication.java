@@ -33,12 +33,14 @@ public class PaybybuddyApplication {
 
 crée un compte
 param : mail, password
-=> save user 
+=> save user ok
+
 
 update user
 param mail + requestbody
-=> get user by mail
+=> get user by mail ok
 =>update user
+
 
 connexion
 param : mail, password

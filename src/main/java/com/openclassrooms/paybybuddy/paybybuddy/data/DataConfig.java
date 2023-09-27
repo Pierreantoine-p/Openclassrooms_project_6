@@ -1,4 +1,4 @@
-/*package com.openclassrooms.paybybuddy.paybybuddy.data;
+package com.openclassrooms.paybybuddy.paybybuddy.data;
 
 import javax.sql.DataSource;
 
@@ -18,4 +18,3 @@ public class DataConfig {
           .build();	
     }
 }
-*/
