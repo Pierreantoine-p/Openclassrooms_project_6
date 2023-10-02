@@ -28,7 +28,7 @@ public class UserModel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "user_id") //TODO : change for user_id
+	@Column(name = "user_id") 
 	private Integer userId;
 
 	@Column(name = "user_name")
@@ -39,28 +39,26 @@ public class UserModel {
 
 	@Column(name = "user_password")
 	private String userPassword;
-
-
+	
 	@OneToMany(
 			cascade = CascadeType.DETACH, 
-			//TODO :  à voir si c'est encore utile
 			orphanRemoval = true, 
-			fetch = FetchType.EAGER)
-	@JoinColumn(name = "relation_id")
+			fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_fk_id_owner_relation")
 	private List<RelationModel> relations;
 
 	@OneToOne(
 			cascade = CascadeType.ALL, 
 			orphanRemoval = true, 
-			fetch = FetchType.EAGER)
-	@JoinColumn(name = "sold_id")
-	private SoldModel  sold;
-
+			fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id", referencedColumnName = "user_fk_id_sold")
+	private SoldModel sold;
+	
 	@OneToMany(
 			cascade = CascadeType.DETACH, 
 			orphanRemoval = true, 
-			fetch = FetchType.EAGER)
-	@JoinColumn(name = "transaction_id")
+			fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_fk_id_owner_transaction")
 	private List<TransactionModel> transactions;
 
 

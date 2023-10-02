@@ -81,4 +81,32 @@ virement du sold sur le compte bancaire
 update sold
 
 
+
+
+transaction 
+récupérer toute les transaction d'un iduser
+crée une transaction
+
+sold
+récupérer un sold d'un iduser
+update un sold
+
+relation
+récupère toute les relations à partir de l'iduser
+récupère une relation par l'iduser
+crée une relation
+
+user
+récupère un user par son id 
+récupèrer tous les utilisateurs
+récupèrer un utilisateur par son mail
+crée un user
+
 */
+//Controller => service => repo
+// repo => service (convertion modèle en dto) => controller 
+
+
+// mise en place dto 
+// endpoint façon angular
+// tester 

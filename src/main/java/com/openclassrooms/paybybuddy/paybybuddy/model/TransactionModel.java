@@ -34,10 +34,10 @@ public class TransactionModel {
 
 	@Column(name = "user_fk_id_owner_transaction")
 	private Integer userIdOwner;
-
+	
 	@Column(name = "user_fk_id_transaction")
-	private Integer userId;
-
+	private Integer userIdTransaction;
+	
 	@Column(name = "transaction_date")
 	private Timestamp transactionDate;
 
@@ -52,11 +52,12 @@ public class TransactionModel {
 
 	@Column(name = "transaction_description")
 	private String transactionDescription;
-
+/*
 	@OneToOne(
 			cascade = CascadeType.DETACH, 
 			orphanRemoval = true, 
-			fetch = FetchType.EAGER)
-	@JoinColumn(name = "user_id")
-	private List<UserModel> user;
+			fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_fk_id_transaction",referencedColumnName = "user_id")
+	private UserModel user;
+	*/
 }

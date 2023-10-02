@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.openclassrooms.paybybuddy.paybybuddy.model.TransactionModel;
 import com.openclassrooms.paybybuddy.paybybuddy.service.TransactionService;
 
 
@@ -27,24 +28,65 @@ public class TransactionController {
 	@Autowired
 	private TransactionService transactionService;
 
-	
-    private static final Logger logger = LogManager.getLogger(TransactionController.class);
 
-    public TransactionController(TransactionService transactionService) {
+	private static final Logger logger = LogManager.getLogger(TransactionController.class);
+
+	public TransactionController(TransactionService transactionService) {
 		this.transactionService = transactionService;
 	}
-    
-    public static <T> List<T> optionalToList(Optional<T> optional) {
-		return optional.map(Collections::singletonList)
-				.orElse(Collections.emptyList());
+	
+	//TODO : revoir l'ordre de creation 
+	/**
+	 * Created new transaction
+	 * @RequestBody transactionModel
+	 */
+	@PostMapping
+	public  ResponseEntity<TransactionModel> save(@RequestBody TransactionModel transactionModel)  {
+		logger.info("save, RequestBody: transactionModel={} ", transactionModel );
+		transactionService.save(transactionModel);
+		return new ResponseEntity<>(transactionModel,HttpStatus.OK);	 
 	}
-    
-    /**
+
+
+	/**
+	 * Get all transaction sort by id
+	 * @Param Integer : id
+	 * @return One all transaction sort by id  
+	 */
+	@GetMapping("/{id}")
+	public ResponseEntity<List<TransactionModel>> getAllById (@PathVariable Integer id){
+		logger.info("getallById, params: id={}", id);
+		List<TransactionModel> result = transactionService.getAllById(id);
+		return new ResponseEntity<>(result,HttpStatus.OK);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+		/*
+		Optional<TransactionModel> optionalValue = transactionService.getUserById(id);
+		List<TransactionModel> resultList = optionalToList(optionalValue);
+		if(!resultList.isEmpty()) {
+			System.out.println("here");
+			return new ResponseEntity<>(resultList,HttpStatus.OK);
+		}else {
+
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+	}
+	*/
+
+	/**
 	 * Get one transaction by id
 	 * @Param Integer : id
 	 * @return One transaction  
 	 */
-    /*
+	/*
 	@GetMapping("/{id}")
 	public ResponseEntity<TransactionModel> getOne (@PathVariable Integer id){
 		logger.info("getOneById, params: id={}", id);
@@ -58,40 +100,12 @@ public class TransactionController {
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 	}
-	*/
-	
-	  /**
-		 * Get all transaction sort by id
-		 * @Param Integer : id
-		 * @return One all transaction sort by id  
-		 */
-	/*
-		@GetMapping("/{id}")
-		public ResponseEntity<TransactionModel> getAllById (@PathVariable Integer id){
-			logger.info("getOneById, params: id={}", id);
-			 Optional<TransactionModel> optionalValue = transactionService.getUserById(id);
-			 List<TransactionModel> resultList = optionalToList(optionalValue);
-			if(!resultList.isEmpty()) {
-				System.out.println("here");
-				return new ResponseEntity<>(resultList,HttpStatus.OK);
-			}else {
-
-				return new ResponseEntity<>(HttpStatus.OK);
-			}
-		}
-		*/
-	 
-    
-    /**
-	 * Created new transaction
-	 * @RequestBody transactionModel
 	 */
-	/*
-	@PostMapping
-	public  ResponseEntity<TransactionModel> save(@RequestBody TransactionModel transactionModel)  {
-		logger.info("save, RequestBody: transactionModel={} ", transactionModel );
-		transactionService.save(transactionModel);
-		return new ResponseEntity<>(transactionModel,HttpStatus.OK);	 
-	}
-	*/
+
+
+
+
+
+
+	 
 }

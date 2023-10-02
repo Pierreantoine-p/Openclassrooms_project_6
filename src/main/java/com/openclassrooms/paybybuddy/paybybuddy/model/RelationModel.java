@@ -29,21 +29,14 @@ public class RelationModel {
 	@Column(name = "relation_id")
 	private Integer id;
 
-	@Column(name = "user_fk_id_relation")
-	private Integer userId;
-
 	@Column(name = "user_fk_id_owner_relation")
 	private Integer useridOwner;
-
-	@Column(name = "relation_user_mail")
-	private String mail;
 
 	@OneToOne(
 			cascade = CascadeType.DETACH, 
 			orphanRemoval = true, 
-			fetch = FetchType.EAGER)
-	@JoinColumn(name = "user_id")
-	//TODO: double @joinColumn ? 
-	private List<UserModel> user;
+			fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_fk_id_relation", referencedColumnName = "user_id")
+	private UserModel user;
 
 }

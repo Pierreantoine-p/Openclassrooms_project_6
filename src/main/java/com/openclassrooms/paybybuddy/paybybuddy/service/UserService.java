@@ -58,12 +58,6 @@ public class UserService {
 	 * @RequestBody userModel
 	 * @return Person update 
 	 */
-	/*
-	public boolean update(String user_mail, UserModel userModel) {
-		boolean result = false;
-		result = userRepository. (user_mail, userModel);
-		return result;
-	}*/
 	public void saveOrUpdate( UserModel userModel) {
 		userRepository.save(userModel);
 	}

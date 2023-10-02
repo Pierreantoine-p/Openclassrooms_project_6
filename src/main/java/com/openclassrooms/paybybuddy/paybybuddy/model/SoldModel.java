@@ -33,10 +33,6 @@ public class SoldModel {
 	@Column(name = "sold_sum")
 	private BigDecimal soldSum;
 
-	@OneToOne(
-			cascade = CascadeType.DETACH, 
-			orphanRemoval = true, 
-			fetch = FetchType.EAGER)
-	@JoinColumn(name = "user_id")
-	private List<UserModel> user;
+	
+	
 }

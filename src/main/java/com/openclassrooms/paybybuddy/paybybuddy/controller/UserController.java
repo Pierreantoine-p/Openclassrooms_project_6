@@ -42,6 +42,7 @@ public class UserController {
 		return optional.map(Collections::singletonList)
 				.orElse(Collections.emptyList());
 	}
+	
 
 	/**
 	 *Get a list of all user
@@ -50,7 +51,8 @@ public class UserController {
 	@GetMapping
 	public ResponseEntity <List<UserModel>> getAll(){
 		logger.info("getAll");
-		return new ResponseEntity<>(userService.getAll(), HttpStatus.OK);
+		List<UserModel> result = userService.getAll();
+		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
 	/**
@@ -58,7 +60,6 @@ public class UserController {
 	 * @Param Integer : id
 	 * @return One user  
 	 */
-	
 	@GetMapping("/id/{id}")
 	public ResponseEntity<UserModel> getOne (@PathVariable Integer id){
 		logger.info("getOneById, params: id={}", id);
@@ -93,6 +94,7 @@ public class UserController {
 		}
 	}
 
+	
 	/**
 	 * Created new user
 	 * @RequestBody userModel
@@ -109,17 +111,20 @@ public class UserController {
 	 * @Param String : user_mail, 
 	 * @return user update 
 	 */
+	/*
 	@PutMapping
 	public UserModel update(@RequestBody UserModel userModel)  {
 		logger.info("update, params: mail={}, RequestBody: userModel={} ", userModel );
 		userService.saveOrUpdate(userModel);
 		return userModel;
 	}
+	*/
 
 	/**
 	 * Delete a person
 	 * @Param String : mail, 
 	 */
+	/*
 	@DeleteMapping("/{user_mail}")
 	public ResponseEntity<String> delete (@PathVariable String user_mail)  {
 		System.out.println("here");
@@ -135,8 +140,8 @@ public class UserController {
 			 return ResponseEntity.notFound().build();
 		}
 	}
+	*/
 	
-	//TODO: try put 
 	/*
 	@PutMapping("/delete/{user_mail}")
 	public ResponseEntity<String> delete (@PathVariable String user_mail)  {
