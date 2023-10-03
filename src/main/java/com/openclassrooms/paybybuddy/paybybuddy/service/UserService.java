@@ -1,5 +1,6 @@
 package com.openclassrooms.paybybuddy.paybybuddy.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.openclassrooms.paybybuddy.paybybuddy.entity.UserEntity;
+import com.openclassrooms.paybybuddy.paybybuddy.model.UserDTO;
 import com.openclassrooms.paybybuddy.paybybuddy.repository.UserRepository;
 
 
@@ -17,12 +19,27 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 	
+	public UserDTO convertToDTO(UserEntity userEntity) {
+		UserDTO userDTO = new UserDTO();
+		userDTO.setUserId(userEntity.getUserId());
+		userDTO.setUserName(userEntity.getUserName());
+		userDTO.setUserMail(userEntity.getUserMail());
+		userDTO.setUserPassword(userEntity.getUserPassword());
+		return userDTO;
+	}
+	
 	/**
 	 *Get a list of users
 	 * @return List of users
 	 */
-	public List<UserEntity> getAll(){
-		return (List<UserEntity>) userRepository.findAll();
+	public List<UserDTO> getAll(){
+		Iterable<UserEntity> users = userRepository.findAll();
+		List<UserDTO> userDTO = new ArrayList<>();
+		
+		for(UserEntity userEntity : users) {
+			userDTO.add(convertToDTO(userEntity));
+		}
+		return userDTO;
 	}
 	
 	/**
@@ -30,8 +47,9 @@ public class UserService {
 	 *@Param Integer : id
 	 * @return single user 
 	 */
-	public Optional<UserEntity> getUserById(Integer id){
-		return userRepository.findById(id);
+	public Optional<UserDTO> getUserById(Integer id){
+		Optional<UserEntity> userOptional = userRepository.findById(id);
+		return userOptional.map(this::convertToDTO);		
 	}
 	
 	
@@ -40,8 +58,9 @@ public class UserService {
 	 *@Param String : user_mail
 	 * @return single user 
 	 */
-	public Optional<UserEntity> getUserByMail(String user_mail){
-		return userRepository.findByuserMail(user_mail);
+	public Optional<UserDTO> getUserByMail(String user_mail){
+		Optional<UserEntity> userOptional = userRepository.findByuserMail(user_mail);
+		return userOptional.map(this::convertToDTO);		
 	}
 	
 	/**

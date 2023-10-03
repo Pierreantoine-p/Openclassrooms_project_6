@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.openclassrooms.paybybuddy.paybybuddy.entity.UserEntity;
+import com.openclassrooms.paybybuddy.paybybuddy.model.UserDTO;
 import com.openclassrooms.paybybuddy.paybybuddy.service.UserService;
 
 
@@ -49,9 +50,9 @@ public class UserController {
 	 * @return List of all users
 	 */
 	@GetMapping
-	public ResponseEntity <List<UserEntity>> getAll(){
+	public ResponseEntity <List<UserDTO>> getAll(){
 		logger.info("getAll");
-		List<UserEntity> result = userService.getAll();
+		List<UserDTO> result = userService.getAll();
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
@@ -61,9 +62,9 @@ public class UserController {
 	 * @return One user  
 	 */
 	@GetMapping("/id/{id}")
-	public ResponseEntity<UserEntity> getOne (@PathVariable Integer id){
+	public ResponseEntity<UserDTO> getOne (@PathVariable Integer id){
 		logger.info("getOneById, params: id={}", id);
-		 Optional<UserEntity> optionalValue = userService.getUserById(id);
+		 Optional<UserDTO> optionalValue = userService.getUserById(id);
 		if(optionalValue.isPresent()) {
 			System.out.println("here");
 			return new ResponseEntity<>(optionalValue.get(),HttpStatus.OK);
@@ -79,12 +80,12 @@ public class UserController {
 	 * @return One user  
 	 */
 	@GetMapping("/mail/{user_mail}")
-	public ResponseEntity<UserEntity> getOne (@PathVariable String user_mail){
+	public ResponseEntity<UserDTO> getOne (@PathVariable String user_mail){
 		System.out.println(" here");
 
 		logger.info("getOneByMail, params: user_mail={}", user_mail);
-		Optional<UserEntity> optionalValue = userService.getUserByMail(user_mail);
-		List<UserEntity> resultList = optionalToList(optionalValue);
+		Optional<UserDTO> optionalValue = userService.getUserByMail(user_mail);
+		List<UserDTO> resultList = optionalToList(optionalValue);
 		if(!resultList.isEmpty()) {
 
 			System.out.println("resultList.get(0)");

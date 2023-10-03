@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.openclassrooms.paybybuddy.paybybuddy.model.DTOTransfertModel;
+//import com.openclassrooms.paybybuddy.paybybuddy.model.DTOTransfertModel;
 import com.openclassrooms.paybybuddy.paybybuddy.service.RelationService;
 import com.openclassrooms.paybybuddy.paybybuddy.service.ServiceService;
 
@@ -19,10 +19,11 @@ public class ServiceController {
 	
 	@Autowired
 	private ServiceService serviceService;
-	
+	/*
 	@Autowired
 	private DTOTransfertModel dTOTransfertModel;
 
+	
 	@PutMapping()
 	@RequestMapping("/transfer")
 	public ResponseEntity<DTOTransfertModel> transfer(@RequestBody DTOTransfertModel dTOTransfertModel){
@@ -31,5 +32,5 @@ public class ServiceController {
 		return new ResponseEntity<>(dTOTransfertModel, HttpStatus.OK);
 
 	}
-
+*/
 }

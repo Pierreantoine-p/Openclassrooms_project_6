@@ -27,7 +27,7 @@ public class RelationEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "relation_id")
-	private Integer id;
+	private Integer relationId;
 
 	@Column(name = "user_fk_id_owner_relation")
 	private Integer useridOwner;

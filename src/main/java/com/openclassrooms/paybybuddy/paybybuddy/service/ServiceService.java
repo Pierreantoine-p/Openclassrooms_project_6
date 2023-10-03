@@ -1,21 +1,40 @@
 package com.openclassrooms.paybybuddy.paybybuddy.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import java.util.Optional;
 
-import com.openclassrooms.paybybuddy.paybybuddy.model.DTOTransfertModel;
-import com.openclassrooms.paybybuddy.paybybuddy.repository.SoldRepository;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import com.openclassrooms.paybybuddy.paybybuddy.entity.UserEntity;
+//import com.openclassrooms.paybybuddy.paybybuddy.model.DTOTransfertModel;
 
 @Service
+@Component
 public class ServiceService {
-	
-	@Autowired
-	private SoldRepository soldRepository;
-	
-	public void transfert(DTOTransfertModel dTOTransfertModel) {
 		
+	private UserService userService;
+	
+	private TransactionService transactionService;
+	
+	private SoldService soldService;
+	
+	private RelationService relationService;
+	
+	public ServiceService(UserService userService, TransactionService transactionService, SoldService soldService, RelationService relationService) {
+		this.userService = userService;
+		this.transactionService = transactionService;
+		this.soldService = soldService;
+		this.relationService = relationService;
 	}
 	
+	/*
+	public void transfert(@RequestBody DTOTransfertModel dTOTransfertModel) {
+		 Optional<UserEntity> optionalUser = userService.getUserById(dTOTransfertModel.getId());
+		 Optional<UserEntity> optionalUserRelation = userService.getUserById(dTOTransfertModel.getUserfkIdRelation());
+		 
+	}
+	*/
 }
 /*
 l'id de l'owner 
