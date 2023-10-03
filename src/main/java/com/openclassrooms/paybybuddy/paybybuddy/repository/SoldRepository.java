@@ -5,13 +5,13 @@ import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
-import com.openclassrooms.paybybuddy.paybybuddy.model.SoldModel;
-import com.openclassrooms.paybybuddy.paybybuddy.model.TransactionModel;
+import com.openclassrooms.paybybuddy.paybybuddy.entity.SoldEntity;
+import com.openclassrooms.paybybuddy.paybybuddy.entity.TransactionEntity;
 
 
 
-public interface SoldRepository extends CrudRepository<SoldModel, Integer>{
+public interface SoldRepository extends CrudRepository<SoldEntity, Integer>{
 	
-	SoldModel findByUserId(Integer id);
+	SoldEntity findByUserId(Integer id);
 
 }

@@ -6,8 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.openclassrooms.paybybuddy.paybybuddy.model.TransactionModel;
-import com.openclassrooms.paybybuddy.paybybuddy.model.UserModel;
+import com.openclassrooms.paybybuddy.paybybuddy.entity.TransactionEntity;
+import com.openclassrooms.paybybuddy.paybybuddy.entity.UserEntity;
 import com.openclassrooms.paybybuddy.paybybuddy.repository.TransactionRepository;
 
 
@@ -21,7 +21,7 @@ public class TransactionService {
 	 * Created new user
 	 * @RequestBody userModel
 	 */
-	public TransactionModel save (TransactionModel transactionModel){
+	public TransactionEntity save (TransactionEntity transactionModel){
 		return transactionRepository.save(transactionModel);
 	}
 	
@@ -30,7 +30,7 @@ public class TransactionService {
 	 *@Param Integer : id
 	 * @return single user 
 	 */
-	public List<TransactionModel> getAllById(Integer id){
+	public List<TransactionEntity> getAllById(Integer id){
 		return transactionRepository.findByUserIdTransaction(id);
 	}
 }

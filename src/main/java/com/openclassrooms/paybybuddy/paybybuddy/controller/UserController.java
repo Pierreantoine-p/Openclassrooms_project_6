@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.openclassrooms.paybybuddy.paybybuddy.model.UserModel;
+import com.openclassrooms.paybybuddy.paybybuddy.entity.UserEntity;
 import com.openclassrooms.paybybuddy.paybybuddy.service.UserService;
 
 
@@ -49,9 +49,9 @@ public class UserController {
 	 * @return List of all users
 	 */
 	@GetMapping
-	public ResponseEntity <List<UserModel>> getAll(){
+	public ResponseEntity <List<UserEntity>> getAll(){
 		logger.info("getAll");
-		List<UserModel> result = userService.getAll();
+		List<UserEntity> result = userService.getAll();
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
@@ -61,9 +61,9 @@ public class UserController {
 	 * @return One user  
 	 */
 	@GetMapping("/id/{id}")
-	public ResponseEntity<UserModel> getOne (@PathVariable Integer id){
+	public ResponseEntity<UserEntity> getOne (@PathVariable Integer id){
 		logger.info("getOneById, params: id={}", id);
-		 Optional<UserModel> optionalValue = userService.getUserById(id);
+		 Optional<UserEntity> optionalValue = userService.getUserById(id);
 		if(optionalValue.isPresent()) {
 			System.out.println("here");
 			return new ResponseEntity<>(optionalValue.get(),HttpStatus.OK);
@@ -79,12 +79,12 @@ public class UserController {
 	 * @return One user  
 	 */
 	@GetMapping("/mail/{user_mail}")
-	public ResponseEntity<UserModel> getOne (@PathVariable String user_mail){
+	public ResponseEntity<UserEntity> getOne (@PathVariable String user_mail){
 		System.out.println(" here");
 
 		logger.info("getOneByMail, params: user_mail={}", user_mail);
-		Optional<UserModel> optionalValue = userService.getUserByMail(user_mail);
-		List<UserModel> resultList = optionalToList(optionalValue);
+		Optional<UserEntity> optionalValue = userService.getUserByMail(user_mail);
+		List<UserEntity> resultList = optionalToList(optionalValue);
 		if(!resultList.isEmpty()) {
 
 			System.out.println("resultList.get(0)");
@@ -100,7 +100,7 @@ public class UserController {
 	 * @RequestBody userModel
 	 */
 	@PostMapping
-	public  ResponseEntity<UserModel> save(@RequestBody UserModel userModel)  {
+	public  ResponseEntity<UserEntity> save(@RequestBody UserEntity userModel)  {
 		logger.info("save, RequestBody: userModel={} ", userModel );
 		userService.save(userModel);
 		return new ResponseEntity<>(userModel,HttpStatus.OK);	 

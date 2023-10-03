@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.openclassrooms.paybybuddy.paybybuddy.model.UserModel;
+import com.openclassrooms.paybybuddy.paybybuddy.entity.UserEntity;
 import com.openclassrooms.paybybuddy.paybybuddy.repository.UserRepository;
 
 
@@ -21,8 +21,8 @@ public class UserService {
 	 *Get a list of users
 	 * @return List of users
 	 */
-	public List<UserModel> getAll(){
-		return (List<UserModel>) userRepository.findAll();
+	public List<UserEntity> getAll(){
+		return (List<UserEntity>) userRepository.findAll();
 	}
 	
 	/**
@@ -30,7 +30,7 @@ public class UserService {
 	 *@Param Integer : id
 	 * @return single user 
 	 */
-	public Optional<UserModel> getUserById(Integer id){
+	public Optional<UserEntity> getUserById(Integer id){
 		return userRepository.findById(id);
 	}
 	
@@ -40,7 +40,7 @@ public class UserService {
 	 *@Param String : user_mail
 	 * @return single user 
 	 */
-	public Optional<UserModel> getUserByMail(String user_mail){
+	public Optional<UserEntity> getUserByMail(String user_mail){
 		return userRepository.findByuserMail(user_mail);
 	}
 	
@@ -48,7 +48,7 @@ public class UserService {
 	 * Created new user
 	 * @RequestBody userModel
 	 */
-	public UserModel save (UserModel userModel){
+	public UserEntity save (UserEntity userModel){
 		return userRepository.save(userModel);
 	}
 	
@@ -58,7 +58,7 @@ public class UserService {
 	 * @RequestBody userModel
 	 * @return Person update 
 	 */
-	public void saveOrUpdate( UserModel userModel) {
+	public void saveOrUpdate( UserEntity userModel) {
 		userRepository.save(userModel);
 	}
 	

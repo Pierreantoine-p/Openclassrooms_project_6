@@ -1,14 +1,11 @@
 package com.openclassrooms.paybybuddy.paybybuddy.service;
 
-import java.math.BigDecimal;
-import java.util.List;
-import java.util.Optional;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.openclassrooms.paybybuddy.paybybuddy.model.SoldModel;
-import com.openclassrooms.paybybuddy.paybybuddy.model.UserModel;
+import com.openclassrooms.paybybuddy.paybybuddy.entity.SoldEntity;
 import com.openclassrooms.paybybuddy.paybybuddy.repository.SoldRepository;
 
 
@@ -25,7 +22,7 @@ public class SoldService {
 	 *@Param Integer : id
 	 * @return single user 
 	 */
-	public SoldModel getById(Integer id){
+	public SoldEntity getById(Integer id){
 		return soldRepository.findByUserId(id);
 	}
 	
@@ -34,7 +31,7 @@ public class SoldService {
 	 * @RequestBody soldModel
 	 * @return Sold update 
 	 */
-	public void saveOrUpdate( SoldModel soldModel) {
+	public void saveOrUpdate( SoldEntity soldModel) {
 		soldRepository.save(soldModel);
 	}
 }

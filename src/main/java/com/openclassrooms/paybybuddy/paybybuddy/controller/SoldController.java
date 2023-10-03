@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.openclassrooms.paybybuddy.paybybuddy.model.SoldModel;
-import com.openclassrooms.paybybuddy.paybybuddy.model.TransactionModel;
-import com.openclassrooms.paybybuddy.paybybuddy.model.UserModel;
+import com.openclassrooms.paybybuddy.paybybuddy.entity.SoldEntity;
+import com.openclassrooms.paybybuddy.paybybuddy.entity.TransactionEntity;
+import com.openclassrooms.paybybuddy.paybybuddy.entity.UserEntity;
 import com.openclassrooms.paybybuddy.paybybuddy.service.SoldService;
 
 
@@ -42,9 +42,9 @@ public class SoldController {
 	 * @return One all transaction sort by id  
 	 */
 	@GetMapping("/{id}")
-	public ResponseEntity<SoldModel> getById (@PathVariable Integer id){
+	public ResponseEntity<SoldEntity> getById (@PathVariable Integer id){
 		logger.info("getallById, params: id={}", id);
-		SoldModel result = soldService.getById(id);
+		SoldEntity result = soldService.getById(id);
 		return new ResponseEntity<>(result,HttpStatus.OK);
 	}
 	
@@ -54,7 +54,7 @@ public class SoldController {
 	 * @return sold update 
 	 */
 	@PutMapping
-	public SoldModel update(@RequestBody SoldModel soldModel)  {
+	public SoldEntity update(@RequestBody SoldEntity soldModel)  {
 		logger.info("update, params: id={}, RequestBody: SoldModel={} ", soldModel );
 		soldService.saveOrUpdate(soldModel);
 		return soldModel;

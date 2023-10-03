@@ -1,4 +1,4 @@
-package com.openclassrooms.paybybuddy.paybybuddy.model;
+package com.openclassrooms.paybybuddy.paybybuddy.entity;
 
 
 import java.util.List;
@@ -24,7 +24,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @DynamicUpdate
-public class UserModel {
+public class UserEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,21 +45,21 @@ public class UserModel {
 			orphanRemoval = true, 
 			fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_fk_id_owner_relation")
-	private List<RelationModel> relations;
+	private List<RelationEntity> relations;
 
 	@OneToOne(
 			cascade = CascadeType.ALL, 
 			orphanRemoval = true, 
 			fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id", referencedColumnName = "user_fk_id_sold")
-	private SoldModel sold;
+	private SoldEntity sold;
 	
 	@OneToMany(
 			cascade = CascadeType.DETACH, 
 			orphanRemoval = true, 
 			fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_fk_id_owner_transaction")
-	private List<TransactionModel> transactions;
+	private List<TransactionEntity> transactions;
 
 
 }

@@ -1,4 +1,4 @@
-package com.openclassrooms.paybybuddy.paybybuddy.model;
+package com.openclassrooms.paybybuddy.paybybuddy.entity;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -20,12 +20,12 @@ import lombok.NoArgsConstructor;
 @Table(name = "sold")
 @Data
 @NoArgsConstructor
-public class SoldModel {
+public class SoldEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "sold_id")
-	private Integer soldDd;
+	private Integer soldId;
 
 	@Column(name = "user_fk_id_sold")
 	private Integer userId;

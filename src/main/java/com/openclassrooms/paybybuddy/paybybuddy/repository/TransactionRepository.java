@@ -4,12 +4,12 @@ import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
-import com.openclassrooms.paybybuddy.paybybuddy.model.TransactionModel;
+import com.openclassrooms.paybybuddy.paybybuddy.entity.TransactionEntity;
 
 
 
-public interface TransactionRepository extends CrudRepository<TransactionModel, Integer> {
+public interface TransactionRepository extends CrudRepository<TransactionEntity, Integer> {
 	
- List<TransactionModel> findByUserIdTransaction(Integer id);
+ List<TransactionEntity> findByUserIdTransaction(Integer id);
  
 }

@@ -6,8 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.openclassrooms.paybybuddy.paybybuddy.model.RelationModel;
-import com.openclassrooms.paybybuddy.paybybuddy.model.UserModel;
+import com.openclassrooms.paybybuddy.paybybuddy.entity.RelationEntity;
+import com.openclassrooms.paybybuddy.paybybuddy.entity.UserEntity;
 import com.openclassrooms.paybybuddy.paybybuddy.repository.RelationRepository;
 
 
@@ -21,7 +21,7 @@ public class RelationService {
 	 * Created new relation
 	 * @RequestBody relationModel
 	 */
-	public RelationModel save (RelationModel relationModel){
+	public RelationEntity save (RelationEntity relationModel){
 		return relationRepository.save(relationModel);
 	}
 	
@@ -30,7 +30,7 @@ public class RelationService {
 	 *@Param String : id
 	 * @return all relations sort by id_user
 	 */
-	public List<RelationModel> getRelationsById(Integer id){
+	public List<RelationEntity> getRelationsById(Integer id){
 		return relationRepository.findAllByUserUserId(id);
 	}
 	
@@ -39,7 +39,7 @@ public class RelationService {
 	 *@Param String : id
 	 * @return One relation sort by id_user
 	 */
-	public RelationModel getRelationById(Integer id){
+	public RelationEntity getRelationById(Integer id){
 		return relationRepository. findByUserUserId(id);
 	}
 	

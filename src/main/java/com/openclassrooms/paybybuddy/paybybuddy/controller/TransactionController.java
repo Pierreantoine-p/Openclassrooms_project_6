@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.openclassrooms.paybybuddy.paybybuddy.model.TransactionModel;
+import com.openclassrooms.paybybuddy.paybybuddy.entity.TransactionEntity;
 import com.openclassrooms.paybybuddy.paybybuddy.service.TransactionService;
 
 
@@ -41,7 +41,7 @@ public class TransactionController {
 	 * @RequestBody transactionModel
 	 */
 	@PostMapping
-	public  ResponseEntity<TransactionModel> save(@RequestBody TransactionModel transactionModel)  {
+	public  ResponseEntity<TransactionEntity> save(@RequestBody TransactionEntity transactionModel)  {
 		logger.info("save, RequestBody: transactionModel={} ", transactionModel );
 		transactionService.save(transactionModel);
 		return new ResponseEntity<>(transactionModel,HttpStatus.OK);	 
@@ -54,9 +54,9 @@ public class TransactionController {
 	 * @return One all transaction sort by id  
 	 */
 	@GetMapping("/{id}")
-	public ResponseEntity<List<TransactionModel>> getAllById (@PathVariable Integer id){
+	public ResponseEntity<List<TransactionEntity>> getAllById (@PathVariable Integer id){
 		logger.info("getallById, params: id={}", id);
-		List<TransactionModel> result = transactionService.getAllById(id);
+		List<TransactionEntity> result = transactionService.getAllById(id);
 		return new ResponseEntity<>(result,HttpStatus.OK);
 	}
 	

@@ -1,8 +1,6 @@
 package com.openclassrooms.paybybuddy.paybybuddy.controller;
 
 import java.util.List;
-import java.util.Optional;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.openclassrooms.paybybuddy.paybybuddy.model.RelationModel;
-import com.openclassrooms.paybybuddy.paybybuddy.model.UserModel;
+import com.openclassrooms.paybybuddy.paybybuddy.entity.RelationEntity;
 import com.openclassrooms.paybybuddy.paybybuddy.service.RelationService;
 
 
@@ -39,7 +36,7 @@ public class RelationController {
 	 * @RequestBody userModel
 	 */
 	@PostMapping
-	public  ResponseEntity<RelationModel> save(@RequestBody RelationModel relationModel)  {
+	public  ResponseEntity<RelationEntity> save(@RequestBody RelationEntity relationModel)  {
 		logger.info("save, RequestBody: userModel={} ", relationModel );
 		relationService.save(relationModel);
 		return new ResponseEntity<>(relationModel,HttpStatus.OK);	 
@@ -51,9 +48,9 @@ public class RelationController {
 	 * @return All relation sort by id user  
 	 */
 	@GetMapping("/relations/{id}")
-	public ResponseEntity<List<RelationModel>> getAllRelationById (@PathVariable Integer id){
+	public ResponseEntity<List<RelationEntity>> getAllRelationById (@PathVariable Integer id){
 		logger.info("getOneById, params: id={}", id);
-		List<RelationModel> relationList = relationService.getRelationsById(id);
+		List<RelationEntity> relationList = relationService.getRelationsById(id);
 		return new ResponseEntity<>(relationList,HttpStatus.OK);
 	}
 
@@ -64,9 +61,9 @@ public class RelationController {
 	 * @return One relation  
 	 */
 	@GetMapping("/relation/{id}")
-	public ResponseEntity<RelationModel> getOneRelationById (@PathVariable Integer id){
+	public ResponseEntity<RelationEntity> getOneRelationById (@PathVariable Integer id){
 		logger.info("getOneByMail, params: id={}", id);
-		RelationModel result = relationService.getRelationById(id);
+		RelationEntity result = relationService.getRelationById(id);
 		return new ResponseEntity<>(result,HttpStatus.OK);
 	}
 

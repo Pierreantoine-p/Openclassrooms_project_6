@@ -1,4 +1,4 @@
-package com.openclassrooms.paybybuddy.paybybuddy.model;
+package com.openclassrooms.paybybuddy.paybybuddy.entity;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -25,7 +25,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @DynamicUpdate
-public class TransactionModel {
+public class TransactionEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

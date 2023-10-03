@@ -1,4 +1,4 @@
-package com.openclassrooms.paybybuddy.paybybuddy.model;
+package com.openclassrooms.paybybuddy.paybybuddy.entity;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @DynamicUpdate
-public class RelationModel {
+public class RelationEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,6 +37,6 @@ public class RelationModel {
 			orphanRemoval = true, 
 			fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_fk_id_relation", referencedColumnName = "user_id")
-	private UserModel user;
+	private UserEntity user;
 
 }
