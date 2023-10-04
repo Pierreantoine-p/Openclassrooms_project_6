@@ -106,10 +106,5 @@ crée un user
 
 
 */
-//Controller => service => repo
-// repo => service (convertion modèle en dto) => controller 
-
-
-// mise en place dto 
 // endpoint façon angular
 // tester 

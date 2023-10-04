@@ -1,6 +1,7 @@
 package com.openclassrooms.paybybuddy.paybybuddy.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -18,7 +19,7 @@ public interface RelationRepository extends CrudRepository<RelationEntity, Integ
     //List<RelationModel> findAllByUserFkIdRelation(@Param("userId") Integer userId);
 	
 	//public RelationModel findByUserFkIdRelation (Integer id);
-	public RelationEntity findByUserUserId (Integer id);
+	public Optional<RelationEntity> findByUserUserId (Integer id);
 
 
 	

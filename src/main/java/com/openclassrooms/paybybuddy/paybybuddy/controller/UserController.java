@@ -66,7 +66,6 @@ public class UserController {
 		logger.info("getOneById, params: id={}", id);
 		 Optional<UserDTO> optionalValue = userService.getUserById(id);
 		if(optionalValue.isPresent()) {
-			System.out.println("here");
 			return new ResponseEntity<>(optionalValue.get(),HttpStatus.OK);
 		}else {
 			return new ResponseEntity<>(HttpStatus.OK);

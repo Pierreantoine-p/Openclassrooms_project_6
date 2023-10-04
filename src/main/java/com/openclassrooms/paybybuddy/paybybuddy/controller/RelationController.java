@@ -1,6 +1,8 @@
 package com.openclassrooms.paybybuddy.paybybuddy.controller;
 
 import java.util.List;
+import java.util.Optional;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.openclassrooms.paybybuddy.paybybuddy.entity.RelationEntity;
+import com.openclassrooms.paybybuddy.paybybuddy.model.RelationDTO;
 import com.openclassrooms.paybybuddy.paybybuddy.service.RelationService;
 
 
@@ -48,9 +51,9 @@ public class RelationController {
 	 * @return All relation sort by id user  
 	 */
 	@GetMapping("/relations/{id}")
-	public ResponseEntity<List<RelationEntity>> getAllRelationById (@PathVariable Integer id){
+	public ResponseEntity<List<RelationDTO>> getAllRelationById (@PathVariable Integer id){
 		logger.info("getOneById, params: id={}", id);
-		List<RelationEntity> relationList = relationService.getRelationsById(id);
+		List<RelationDTO> relationList = relationService.getRelationsById(id);
 		return new ResponseEntity<>(relationList,HttpStatus.OK);
 	}
 
@@ -61,10 +64,14 @@ public class RelationController {
 	 * @return One relation  
 	 */
 	@GetMapping("/relation/{id}")
-	public ResponseEntity<RelationEntity> getOneRelationById (@PathVariable Integer id){
+	public ResponseEntity<RelationDTO> getOneRelationById (@PathVariable Integer id){
 		logger.info("getOneByMail, params: id={}", id);
-		RelationEntity result = relationService.getRelationById(id);
-		return new ResponseEntity<>(result,HttpStatus.OK);
+		Optional<RelationDTO> result = relationService.getRelationById(id);
+		if(result.isPresent()) {
+			return new ResponseEntity<>(result.get(),HttpStatus.OK);
+		}else {
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
 	}
 
 }

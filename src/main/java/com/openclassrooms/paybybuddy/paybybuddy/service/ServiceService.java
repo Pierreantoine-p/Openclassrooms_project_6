@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.openclassrooms.paybybuddy.paybybuddy.entity.UserEntity;
 //import com.openclassrooms.paybybuddy.paybybuddy.model.DTOTransfertModel;
+import com.openclassrooms.paybybuddy.paybybuddy.model.TransfertModelDTO;
+import com.openclassrooms.paybybuddy.paybybuddy.model.UserDTO;
 
 @Service
 @Component
@@ -28,13 +30,13 @@ public class ServiceService {
 		this.relationService = relationService;
 	}
 	
-	/*
-	public void transfert(@RequestBody DTOTransfertModel dTOTransfertModel) {
-		 Optional<UserEntity> optionalUser = userService.getUserById(dTOTransfertModel.getId());
-		 Optional<UserEntity> optionalUserRelation = userService.getUserById(dTOTransfertModel.getUserfkIdRelation());
+	
+	public void transfert(@RequestBody TransfertModelDTO transfertModelDTO) {
+		 Optional<UserDTO> optionalUser = userService.getUserById(transfertModelDTO.getId());
+		 Optional<UserDTO> optionalUserRelation = userService.getUserById(transfertModelDTO.getUserfkIdRelation());
 		 
 	}
-	*/
+	
 }
 /*
 l'id de l'owner 
