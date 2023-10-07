@@ -2,6 +2,8 @@ package com.openclassrooms.paybybuddy.paybybuddy.service;
 
 
 
+import java.math.BigDecimal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +33,9 @@ public class SoldService {
 	 * @RequestBody soldModel
 	 * @return Sold update 
 	 */
-	public void saveOrUpdate( SoldEntity soldModel) {
-		soldRepository.save(soldModel);
+	public void Update( Integer id, BigDecimal amount) {
+		SoldEntity sold = soldRepository.findByUserId(id);
+		sold.getSoldSum().add(amount);
+		soldRepository.save(sold);
 	}
 }

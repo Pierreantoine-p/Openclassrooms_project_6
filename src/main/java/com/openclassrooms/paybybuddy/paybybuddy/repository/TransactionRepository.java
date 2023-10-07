@@ -10,6 +10,7 @@ import com.openclassrooms.paybybuddy.paybybuddy.entity.TransactionEntity;
 
 public interface TransactionRepository extends CrudRepository<TransactionEntity, Integer> {
 	
- List<TransactionEntity> findByUserIdTransaction(Integer id);
- 
+ //List<TransactionEntity> findByUserIdTransaction(Integer id);
+	 List<TransactionEntity> findByUserIdOwner(Integer id);
+
 }

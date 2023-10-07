@@ -44,8 +44,8 @@ public class UserEntity {
 			cascade = CascadeType.DETACH, 
 			orphanRemoval = true, 
 			fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_fk_id_owner_relation")
-	private List<RelationEntity> relations;
+	@JoinColumn(name = "user_Fk_Id_Owner_relation")
+	private List<RelationEntity> relation;
 
 	@OneToOne(
 			cascade = CascadeType.ALL, 

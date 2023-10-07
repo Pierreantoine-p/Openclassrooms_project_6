@@ -8,9 +8,9 @@ import lombok.NoArgsConstructor;
 public class RelationDTO {
 	
 	private Integer relationId;
-	
-	private UserDTO user;
 
-	private Integer useridOwner;
+	private Integer userFkIdRelation;
+	
+	private Integer userIdOwner;
 
 }

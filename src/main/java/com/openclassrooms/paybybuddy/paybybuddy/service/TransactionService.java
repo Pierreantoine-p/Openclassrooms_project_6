@@ -31,6 +31,6 @@ public class TransactionService {
 	 * @return single user 
 	 */
 	public List<TransactionEntity> getAllById(Integer id){
-		return transactionRepository.findByUserIdTransaction(id);
+		return transactionRepository.findByUserIdOwner(id);
 	}
 }

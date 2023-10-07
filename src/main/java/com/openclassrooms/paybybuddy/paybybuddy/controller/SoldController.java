@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.openclassrooms.paybybuddy.paybybuddy.entity.SoldEntity;
@@ -53,11 +54,11 @@ public class SoldController {
 	 * @RequestBody soldModel
 	 * @return sold update 
 	 */
-	@PutMapping
-	public SoldEntity update(@RequestBody SoldEntity soldModel)  {
-		logger.info("update, params: id={}, RequestBody: SoldModel={} ", soldModel );
-		soldService.saveOrUpdate(soldModel);
+	@PutMapping("/id/amount")
+	public SoldEntity update(@RequestParam(name = "id")Integer id,@RequestParam(name = "amount")BigDecimal amount)  {
+		//logger.info("update, params: id={}, RequestBody: SoldModel={} ", soldModel );
+		soldService.saveOrUpdate(id, amount);
 		return soldModel;
 	}
-    
+    //TODO: change method for update sold with just idowner and amount
 }

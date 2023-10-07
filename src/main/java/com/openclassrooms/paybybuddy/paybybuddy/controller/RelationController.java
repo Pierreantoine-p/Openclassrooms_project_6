@@ -44,15 +44,17 @@ public class RelationController {
 		relationService.save(relationModel);
 		return new ResponseEntity<>(relationModel,HttpStatus.OK);	 
 	}
-
+	
 	/**
 	 * Get all relation by user_id 
 	 * @Param Integer : id
 	 * @return All relation sort by id user  
 	 */
+	
 	@GetMapping("/relations/{id}")
 	public ResponseEntity<List<RelationDTO>> getAllRelationById (@PathVariable Integer id){
 		logger.info("getOneById, params: id={}", id);
+		System.out.println("hello");
 		List<RelationDTO> relationList = relationService.getRelationsById(id);
 		return new ResponseEntity<>(relationList,HttpStatus.OK);
 	}
@@ -63,15 +65,13 @@ public class RelationController {
 	 * @Param Integer : id
 	 * @return One relation  
 	 */
-	@GetMapping("/relation/{id}")
-	public ResponseEntity<RelationDTO> getOneRelationById (@PathVariable Integer id){
-		logger.info("getOneByMail, params: id={}", id);
-		Optional<RelationDTO> result = relationService.getRelationById(id);
-		if(result.isPresent()) {
-			return new ResponseEntity<>(result.get(),HttpStatus.OK);
-		}else {
-			return new ResponseEntity<>(HttpStatus.OK);
-		}
+	/*
+	@GetMapping("/relation/{userIdOwner}/{userUserId}")
+	public ResponseEntity<RelationDTO> getOneRelationById (@PathVariable Integer userIdOwner, @PathVariable Integer userUserId){
+		logger.info("getOneByMail, params: id={}", userIdOwner);
+		RelationDTO result = relationService.getRelationById(userIdOwner,userUserId);
+		return new ResponseEntity<>(result,HttpStatus.OK);
 	}
+	*/
 
 }

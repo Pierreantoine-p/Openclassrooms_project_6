@@ -1,7 +1,5 @@
 package com.openclassrooms.paybybuddy.paybybuddy.entity;
 
-import java.util.List;
-
 import org.hibernate.annotations.DynamicUpdate;
 
 import jakarta.persistence.CascadeType;
@@ -29,9 +27,9 @@ public class RelationEntity {
 	@Column(name = "relation_id")
 	private Integer relationId;
 
-	@Column(name = "user_fk_id_owner_relation")
-	private Integer useridOwner;
-
+	@Column(name = "user_Fk_Id_Owner_relation")
+	private Integer userFkIdOwnerRelation;
+	
 	@OneToOne(
 			cascade = CascadeType.DETACH, 
 			orphanRemoval = true, 

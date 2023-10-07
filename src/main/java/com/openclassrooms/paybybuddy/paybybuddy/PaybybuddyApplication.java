@@ -11,11 +11,7 @@ public class PaybybuddyApplication {
 	}
 
 }
-//TODO : Faire le chemin de donnée pour voir quel service toucher
 
-//TODO : Ce crée un compte
-//TODO : modifier l'utilisateur
-//TODO : Ce connecter à un compte
 
 //TODO : Ajouter une relation
 //TODO : Consulter la liste
@@ -31,20 +27,7 @@ public class PaybybuddyApplication {
 
 /*
 
-crée un compte
-param : mail, password
-=> save user ok
 
-
-update user
-param mail + requestbody
-=> get user by mail ok
-=>update user
-
-
-connexion
-param : mail, password
-=> get user
 
 Ajouter une relation
 param : mail_user + userIdOwner
@@ -83,9 +66,7 @@ update sold
 
 
 
-transaction 
-récupérer toute les transaction d'un iduser
-crée une transaction
+
 
 sold
 récupérer un sold d'un iduser

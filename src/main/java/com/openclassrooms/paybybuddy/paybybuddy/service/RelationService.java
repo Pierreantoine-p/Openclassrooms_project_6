@@ -1,16 +1,16 @@
 package com.openclassrooms.paybybuddy.paybybuddy.service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
+import java.util.Set;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.openclassrooms.paybybuddy.paybybuddy.entity.RelationEntity;
-import com.openclassrooms.paybybuddy.paybybuddy.entity.UserEntity;
 import com.openclassrooms.paybybuddy.paybybuddy.model.RelationDTO;
-import com.openclassrooms.paybybuddy.paybybuddy.model.UserDTO;
 import com.openclassrooms.paybybuddy.paybybuddy.repository.RelationRepository;
 
 
@@ -20,24 +20,30 @@ public class RelationService {
 	@Autowired
 	private RelationRepository relationRepository;
 
-	public RelationDTO convertToDTO(RelationEntity relationEntity) {
+	@Autowired
+	private ModelMapper modelMapper;
+
+	public RelationDTO convertToDTO(RelationEntity relationEntity, Set<Integer> processedEntities) {
+		if (relationEntity == null || processedEntities.contains(relationEntity.getRelationId())) {
+			return new RelationDTO();
+		}
+		processedEntities.add(relationEntity.getRelationId()); // Marquer la relation comme traitée
+
 		RelationDTO relationDTO = new RelationDTO();
 		relationDTO.setRelationId(relationEntity.getRelationId());
-		relationDTO.setUseridOwner(relationEntity.getUseridOwner());
-		
+		relationDTO.setUserIdOwner(relationEntity.getUserFkIdOwnerRelation());
+
 		if(relationEntity.getUser() != null) {
-			UserDTO userDTO = convertUserEntityToDTO(relationEntity.getUser());
-			relationDTO.setUser(userDTO);
+			relationDTO.setUserFkIdRelation(relationEntity.getUser().getUserId());;
 		}
 		return relationDTO;
 	}
-	
-	private UserDTO convertUserEntityToDTO(UserEntity userEntity) {
-		UserDTO userDTO = new UserDTO();
-		userDTO.setUserId(userEntity.getUserId());
-		return userDTO;
+/*
+	if(relationEntity.getUser() != null) {
+		relationDTO.setUserFkIdOwnerRelation(relationEntity.getUser().getUserId());
 	}
-	
+	*/
+
 	/**
 	 * Created new relation
 	 * @RequestBody relationModel
@@ -51,12 +57,16 @@ public class RelationService {
 	 *@Param String : id
 	 * @return all relations sort by id_user
 	 */
+
 	public List<RelationDTO> getRelationsById(Integer id){
-		List<RelationEntity> relationList = relationRepository.findAllByUserUserId(id);
+		List<RelationEntity> relationList = relationRepository.findAllByUserFkIdOwnerRelation (id);
 		List<RelationDTO> relationDTO = new ArrayList<>();
+	    Set<Integer> processedEntities = new HashSet<>(); // Créez un ensemble vide
+
 		for (RelationEntity relation : relationList) {
-			relationDTO	.add(convertToDTO(relation));
+			relationDTO.add(convertToDTO(relation,processedEntities));
 		}
+
 		return relationDTO;	
 	}
 
@@ -65,10 +75,13 @@ public class RelationService {
 	 *@Param String : id
 	 * @return One relation sort by id_user
 	 */
-	public Optional<RelationDTO> getRelationById(Integer id){
-		Optional<RelationEntity> relationEntity = relationRepository. findByUserUserId(id);
-		return relationEntity.map(this::convertToDTO);
+	/*
+	public RelationDTO getRelationById(Integer userIdOwner, Integer userUserId){
+		RelationEntity relationEntity = relationRepository.findByUserIdOwnerAndUserUserId(userIdOwner, userUserId);
+		RelationDTO relationDTO = modelMapper.map(relationEntity, RelationDTO.class);
+		return relationDTO;
 	}
+	*/
 
 }
 
