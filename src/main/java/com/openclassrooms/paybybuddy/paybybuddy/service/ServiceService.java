@@ -32,11 +32,14 @@ public class ServiceService {
 
 
 	public void transfert(@RequestBody TransfertModelDTO transfertModelDTO) {
+		
+		
 		Optional<UserDTO> optionalUser = userService.getUserById(transfertModelDTO.getUseridOwner());
 		Optional<UserDTO> optionalUserRelation = userService.getUserById(transfertModelDTO.getUserfkIdRelation());
+		
 		double tax = 0.05;
 		double amountTax = transfertModelDTO.getAmount() * tax;
-		soldService.saveOrUpdate(transfertModelDTO.getSoldEntity());
+		soldService.Update(transfertModelDTO.getUseridOwner(), transfertModelDTO.amount); saveOrUpdate(transfertModelDTO.getSoldEntity());
 
 	}
 

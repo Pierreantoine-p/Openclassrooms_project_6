@@ -33,7 +33,7 @@ public class SoldService {
 	 * @RequestBody soldModel
 	 * @return Sold update 
 	 */
-	public void Update( Integer id, BigDecimal amount) {
+	public void Update( Integer id, double amount) {
 		SoldEntity sold = soldRepository.findByUserId(id);
 		sold.getSoldSum().add(amount);
 		soldRepository.save(sold);

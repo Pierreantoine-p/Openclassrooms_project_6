@@ -55,7 +55,7 @@ public class SoldController {
 	 * @return sold update 
 	 */
 	@PutMapping("/id/amount")
-	public SoldEntity update(@RequestParam(name = "id")Integer id,@RequestParam(name = "amount")BigDecimal amount)  {
+	public SoldEntity update(@RequestParam(name = "id")Integer id,@RequestParam(name = "amount")double amount)  {
 		//logger.info("update, params: id={}, RequestBody: SoldModel={} ", soldModel );
 		soldService.saveOrUpdate(id, amount);
 		return soldModel;

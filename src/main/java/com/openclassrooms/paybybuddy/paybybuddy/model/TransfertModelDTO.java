@@ -1,5 +1,7 @@
 package com.openclassrooms.paybybuddy.paybybuddy.model;
 
+import java.math.BigDecimal;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.openclassrooms.paybybuddy.paybybuddy.entity.SoldEntity;
@@ -14,7 +16,7 @@ public class TransfertModelDTO {
 	private Integer id ;
 	private Integer useridOwner ;
 	private Integer userfkIdRelation;
-	private Integer amount;
+	private double amount;
 	private String description;
 
 	
