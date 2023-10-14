@@ -2,8 +2,6 @@ package com.openclassrooms.paybybuddy.paybybuddy.service;
 
 
 
-import java.math.BigDecimal;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,26 +14,39 @@ public class SoldService {
 
 	@Autowired
 	private SoldRepository soldRepository;
-	
-	//getById
-	//saveOrUpdate
+
+
 	/**
-	 *Get a user by id
-	 *@Param Integer : id
+	 * Get a user by id
+	 * @Param Integer : id
 	 * @return single user 
 	 */
 	public SoldEntity getById(Integer id){
 		return soldRepository.findByUserId(id);
 	}
-	
+
 	/**
 	 * Update a sum for sold 
-	 * @RequestBody soldModel
+	 * @Param Integer : id
+	 * @Param double : amount
 	 * @return Sold update 
 	 */
-	public void Update( Integer id, double amount) {
-		SoldEntity sold = soldRepository.findByUserId(id);
-		sold.getSoldSum().add(amount);
-		soldRepository.save(sold);
+	public void update( Integer id, double amount) {
+		SoldEntity existingSold = soldRepository.findByUserId(id);		
+		if(existingSold != null) {
+			existingSold.setSoldSum(amount);
+			soldRepository.save(existingSold);
+		}
+	}
+	
+	/**
+	 * create new sold when user is create
+	 * @Param Integer : id
+	 * @return new sold default 0 
+	 */
+	public SoldEntity create (Integer id) {
+		SoldEntity soldEntity = new SoldEntity();
+		soldEntity.setUserId(id);
+		return soldRepository.save(soldEntity);
 	}
 }

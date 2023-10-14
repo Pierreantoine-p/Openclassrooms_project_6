@@ -13,79 +13,14 @@ public class PaybybuddyApplication {
 }
 
 
-//TODO : Ajouter une relation
-//TODO : Consulter la liste
-//TODO : Supprimer une relation
-
-//TODO : remplire table sold à partir de son compte bancaire
-//TODO : faire un virement vers un autre utilisateur (chaque transfert est sauvegarder dans l'historique)
-//TODO : virement du sold sur le compte bancaire
-
-//TODO : Voir l'historique des virements
-
-
-
 /*
-
-
-
-Ajouter une relation
-param : mail_user + userIdOwner
-=> get id user
-=> get user by mail 
-=> create relation
-
-consulter la liste
-=> get userIdOwner
-=> get all by id_user
-
-supprimer une relation
-=> get id user
-=> find user by mail who want delete
-=> delete user
-
-remplire table sold à partir de son compte bancaire
-=> get idowner 
-update sold
-
-faire un virement 
-idowner 
-relation 
-get sold idowner
-mail de la relation 
-l'id du mail
-update sold idowner 
-update sold id_relation
-=>create new transfert 
-
-
-virement du sold sur le compte bancaire
-=> get idowner 
-update sold
-
-
-
-
-
-
-sold
-récupérer un sold d'un iduser
-update un sold
-
-relation
-récupère toute les relations à partir de l'iduser
-récupère une relation par l'iduser
-crée une relation
-
-user
-récupère un user par son id 
-récupèrer tous les utilisateurs
-récupèrer un utilisateur par son mail
-crée un user
-
-
-
-
-*/
-// endpoint façon angular
-// tester 
+ * test integration 
+ * update user 
+ * faire JUSTE le front 
+ * commentaire 
+ * logger 
+ * check probleme
+ * convention nommage 
+ * revoir la method add relation pas de body 
+ *voir perfection DTO
+ */

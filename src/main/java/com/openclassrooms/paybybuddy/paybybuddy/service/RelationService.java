@@ -27,7 +27,7 @@ public class RelationService {
 		if (relationEntity == null || processedEntities.contains(relationEntity.getRelationId())) {
 			return new RelationDTO();
 		}
-		processedEntities.add(relationEntity.getRelationId()); // Marquer la relation comme traitée
+		processedEntities.add(relationEntity.getRelationId());
 
 		RelationDTO relationDTO = new RelationDTO();
 		relationDTO.setRelationId(relationEntity.getRelationId());
@@ -38,18 +38,13 @@ public class RelationService {
 		}
 		return relationDTO;
 	}
-/*
-	if(relationEntity.getUser() != null) {
-		relationDTO.setUserFkIdOwnerRelation(relationEntity.getUser().getUserId());
-	}
-	*/
 
 	/**
 	 * Created new relation
 	 * @RequestBody relationModel
 	 */
-	public RelationEntity save (RelationEntity relationModel){
-		return relationRepository.save(relationModel);
+	public RelationEntity save (RelationEntity relationEntity){
+		return relationRepository.save(relationEntity);
 	}
 
 	/**
@@ -57,16 +52,13 @@ public class RelationService {
 	 *@Param String : id
 	 * @return all relations sort by id_user
 	 */
-
 	public List<RelationDTO> getRelationsById(Integer id){
 		List<RelationEntity> relationList = relationRepository.findAllByUserFkIdOwnerRelation (id);
 		List<RelationDTO> relationDTO = new ArrayList<>();
-	    Set<Integer> processedEntities = new HashSet<>(); // Créez un ensemble vide
-
+		Set<Integer> processedEntities = new HashSet<>();
 		for (RelationEntity relation : relationList) {
 			relationDTO.add(convertToDTO(relation,processedEntities));
 		}
-
 		return relationDTO;	
 	}
 
@@ -77,11 +69,11 @@ public class RelationService {
 	 */
 	/*
 	public RelationDTO getRelationById(Integer userIdOwner, Integer userUserId){
-		RelationEntity relationEntity = relationRepository.findByUserIdOwnerAndUserUserId(userIdOwner, userUserId);
+		RelationEntity relationEntity = relationRepository.findByUserIds(userIdOwner, userUserId);
 		RelationDTO relationDTO = modelMapper.map(relationEntity, RelationDTO.class);
 		return relationDTO;
 	}
-	*/
+*/
 
 }
 

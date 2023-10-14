@@ -1,9 +1,6 @@
 package com.openclassrooms.paybybuddy.paybybuddy.controller;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,24 +30,12 @@ public class TransactionController {
 	public TransactionController(TransactionService transactionService) {
 		this.transactionService = transactionService;
 	}
-	
-	//TODO : revoir l'ordre de creation 
-	/**
-	 * Created new transaction
-	 * @RequestBody transactionModel
-	 */
-	@PostMapping
-	public  ResponseEntity<TransactionEntity> save(@RequestBody TransactionEntity transactionModel)  {
-		logger.info("save, RequestBody: transactionModel={} ", transactionModel );
-		transactionService.save(transactionModel);
-		return new ResponseEntity<>(transactionModel,HttpStatus.OK);	 
-	}
 
 
 	/**
-	 * Get all transaction sort by id
+	 * Get all transaction sort by userId
 	 * @Param Integer : id
-	 * @return One all transaction sort by id  
+	 * @return One all transaction sort by userId
 	 */
 	@GetMapping("/{id}")
 	public ResponseEntity<List<TransactionEntity>> getAllById (@PathVariable Integer id){
@@ -59,27 +43,6 @@ public class TransactionController {
 		List<TransactionEntity> result = transactionService.getAllById(id);
 		return new ResponseEntity<>(result,HttpStatus.OK);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		/*
-		Optional<TransactionModel> optionalValue = transactionService.getUserById(id);
-		List<TransactionModel> resultList = optionalToList(optionalValue);
-		if(!resultList.isEmpty()) {
-			System.out.println("here");
-			return new ResponseEntity<>(resultList,HttpStatus.OK);
-		}else {
-
-			return new ResponseEntity<>(HttpStatus.OK);
-		}
-	}
-	*/
 
 	/**
 	 * Get one transaction by id
@@ -107,5 +70,5 @@ public class TransactionController {
 
 
 
-	 
+
 }

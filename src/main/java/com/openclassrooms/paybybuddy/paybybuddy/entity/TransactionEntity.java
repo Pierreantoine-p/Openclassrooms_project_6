@@ -1,21 +1,13 @@
 package com.openclassrooms.paybybuddy.paybybuddy.entity;
 
-import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.util.Date;
-import java.util.List;
-
 import org.hibernate.annotations.DynamicUpdate;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -42,13 +34,13 @@ public class TransactionEntity {
 	private Timestamp transactionDate;
 
 	@Column(name = "transaction_sum")
-	private BigDecimal transactionSum;
+	private double transactionSum;
 
 	@Column(name = "transaction_fee")
-	private BigDecimal transactionFee;
+	private double transactionFee;
 
 	@Column(name = "transaction_sum_final")
-	private BigDecimal transactionSumFinal;
+	private double transactionSumFinal;
 
 	@Column(name = "transaction_description")
 	private String transactionDescription;

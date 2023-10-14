@@ -1,8 +1,6 @@
 package com.openclassrooms.paybybuddy.paybybuddy.controller;
 
 import java.util.List;
-import java.util.Optional;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,31 +33,30 @@ public class RelationController {
 	}
 
 	/**
-	 * Created new user
-	 * @RequestBody userModel
+	 * Created new relation between two users
+	 * @RequestBody RelationEntity relationEntity
+	 * @return All relation sort by id user 
 	 */
 	@PostMapping
-	public  ResponseEntity<RelationEntity> save(@RequestBody RelationEntity relationModel)  {
-		logger.info("save, RequestBody: userModel={} ", relationModel );
-		relationService.save(relationModel);
-		return new ResponseEntity<>(relationModel,HttpStatus.OK);	 
+	public  ResponseEntity<RelationEntity> save(@RequestBody RelationEntity relationEntity)  {
+		logger.info("save, RequestBody: RelationEntity={} ", relationEntity );
+		relationService.save(relationEntity);
+		return new ResponseEntity<>(relationEntity,HttpStatus.OK);	 
 	}
 	
 	/**
-	 * Get all relation by user_id 
+	 * Get all relation by userId 
 	 * @Param Integer : id
-	 * @return All relation sort by id user  
+	 * @return All relation sort by userId  
 	 */
-	
 	@GetMapping("/relations/{id}")
 	public ResponseEntity<List<RelationDTO>> getAllRelationById (@PathVariable Integer id){
 		logger.info("getOneById, params: id={}", id);
-		System.out.println("hello");
 		List<RelationDTO> relationList = relationService.getRelationsById(id);
 		return new ResponseEntity<>(relationList,HttpStatus.OK);
 	}
 
-	//TODO: revoir
+	
 	/**
 	 * Get one relation by id_user
 	 * @Param Integer : id
