@@ -2,6 +2,9 @@ package com.openclassrooms.paybybuddy.paybybuddy.entity;
 
 import org.hibernate.annotations.DynamicUpdate;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -37,4 +40,16 @@ public class RelationEntity {
 	@JoinColumn(name = "user_fk_id_relation", referencedColumnName = "user_id")
 	private UserEntity user;
 
+	@JsonCreator
+	public RelationEntity(
+			@JsonProperty("relationId")Integer relationId,
+			@JsonProperty("userFkIdOwnerRelation")Integer userFkIdOwnerRelation,
+			@JsonProperty("user")UserEntity user
+			) {
+		this.relationId = relationId;
+		this.userFkIdOwnerRelation = userFkIdOwnerRelation;
+		this.user = user;
+
+	}
+	
 }

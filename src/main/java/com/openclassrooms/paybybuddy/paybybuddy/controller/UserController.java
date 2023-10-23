@@ -47,8 +47,9 @@ public class UserController {
 	@PostMapping
 	public  ResponseEntity<UserEntity> save(@RequestBody UserEntity userEntity)  {
 		logger.info("save, RequestBody: UserEntity={} ", userEntity );
-		userService.save(userEntity);
-		return new ResponseEntity<>(userEntity,HttpStatus.OK);	 
+		UserEntity result = userService.save(userEntity);
+		logger.info("result: result={}", result );
+		return new ResponseEntity<>(result,HttpStatus.OK);	 
 	}
 
 	/**
@@ -59,6 +60,7 @@ public class UserController {
 	public ResponseEntity <List<UserDTO>> getAll(){
 		logger.info("getAll");
 		List<UserDTO> result = userService.getAll();
+		logger.info("result: result={}", result );
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
@@ -68,11 +70,12 @@ public class UserController {
 	 * @return One user  
 	 */
 	@GetMapping("/id/{id}")
-	public ResponseEntity<UserDTO> getOne (@PathVariable Integer id){
+	public ResponseEntity<UserDTO> getOneById (@PathVariable Integer id){
 		logger.info("getOneById, params: id={}", id);
-		Optional<UserDTO> optionalValue = userService.getUserById(id);
-		if(optionalValue.isPresent()) {
-			return new ResponseEntity<>(optionalValue.get(),HttpStatus.OK);
+		Optional<UserDTO> result = userService.getUserById(id);
+		if(result.isPresent()) {
+			logger.info("result: result={}", result.get() );
+			return new ResponseEntity<>(result.get(),HttpStatus.OK);
 		}else {
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
@@ -84,12 +87,13 @@ public class UserController {
 	 * @Param String : user_mail
 	 * @return One user  
 	 */
-	@GetMapping("/mail/{user_mail}")
-	public ResponseEntity<UserDTO> getOne (@PathVariable String user_mail){
-		logger.info("getOneByMail, params: user_mail={}", user_mail);
-		Optional<UserDTO> optionalValue = userService.getUserByMail(user_mail);
+	@GetMapping("/mail/{userMail}")
+	public ResponseEntity<UserDTO> getOneByMail (@PathVariable String userMail){
+		logger.info("getOneByMail, params: user_mail={}", userMail);
+		Optional<UserDTO> optionalValue = userService.getUserByMail(userMail);
 		List<UserDTO> resultList = optionalToList(optionalValue);
 		if(!resultList.isEmpty()) {
+			logger.info("result: result={}", resultList.get(0) );
 			return new ResponseEntity<>(resultList.get(0),HttpStatus.OK);
 		}else {
 			return new ResponseEntity<>(HttpStatus.OK);

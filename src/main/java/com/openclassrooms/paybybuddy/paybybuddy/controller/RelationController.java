@@ -40,7 +40,8 @@ public class RelationController {
 	@PostMapping
 	public  ResponseEntity<RelationEntity> save(@RequestBody RelationEntity relationEntity)  {
 		logger.info("save, RequestBody: RelationEntity={} ", relationEntity );
-		relationService.save(relationEntity);
+		RelationEntity result = relationService.save(relationEntity);
+		logger.info("result: result={}", result );
 		return new ResponseEntity<>(relationEntity,HttpStatus.OK);	 
 	}
 	
@@ -53,6 +54,7 @@ public class RelationController {
 	public ResponseEntity<List<RelationDTO>> getAllRelationById (@PathVariable Integer id){
 		logger.info("getOneById, params: id={}", id);
 		List<RelationDTO> relationList = relationService.getRelationsById(id);
+		logger.info("result: result={}", relationList );
 		return new ResponseEntity<>(relationList,HttpStatus.OK);
 	}
 

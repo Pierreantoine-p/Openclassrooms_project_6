@@ -12,11 +12,9 @@ import com.openclassrooms.paybybuddy.paybybuddy.model.UserDTO;
 
 @Repository
 public interface UserRepository extends CrudRepository<UserEntity, Integer> {
-	 public UserDTO save(UserDTO userDTO);
 
-	public Optional<UserEntity> findByuserMail (String user_mail);
-	
-	void deleteByuserMail(String user_mail);
-	
-	 
+	public UserDTO save(UserDTO userDTO);
+
+	public Optional<UserEntity> findByuserMail (String userMail);
+
 }

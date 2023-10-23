@@ -61,8 +61,8 @@ public class UserService {
 	 *@Param String : user_mail
 	 * @return single user 
 	 */
-	public Optional<UserDTO> getUserByMail(String user_mail){
-		Optional<UserEntity> userOptional = userRepository.findByuserMail(user_mail);
+	public Optional<UserDTO> getUserByMail(String userMail){
+		Optional<UserEntity> userOptional = userRepository.findByuserMail(userMail);
 		return userOptional.map(this::convertToDTO);		
 	}
 
@@ -77,7 +77,7 @@ public class UserService {
 		String hashedPassword = passwordEncoder.encode(userPassword);
 		userEntity.setUserPassword(hashedPassword);
 		UserEntity newUser = userRepository.save(userEntity);
-		newUser.setSold(soldService.create(newUser.getUserId()));
+		newUser.setSold(soldService.save(newUser.getUserId()));
 		return userEntity;
 	}
 

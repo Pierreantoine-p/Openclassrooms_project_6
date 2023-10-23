@@ -15,12 +15,12 @@ public class PaybybuddyApplication {
 
 /*
  * test integration 
- * update user 
  * faire JUSTE le front 
- * commentaire 
- * logger 
- * check probleme
- * convention nommage 
  * revoir la method add relation pas de body 
+ * 
+ * voir projet 4 pour bdd test
+ * finir test 
+ * voir pourquoi target ne ce crée pas 
+ * faire cours angular 2 
  *voir perfection DTO
  */

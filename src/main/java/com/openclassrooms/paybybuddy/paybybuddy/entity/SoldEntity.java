@@ -1,5 +1,9 @@
 package com.openclassrooms.paybybuddy.paybybuddy.entity;
 
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,6 +30,18 @@ public class SoldEntity {
 	@Column(name = "sold_sum")
 	private double soldSum;
 
+	@JsonCreator
+	public SoldEntity(
+			@JsonProperty("soldId")Integer soldId,
+			@JsonProperty("userId")Integer userId,
+			@JsonProperty("soldSum")double soldSum
+			) {
+		this.soldId = soldId;
+		this.userId = userId;
+		this.soldSum = soldSum;
+
+	}
+
 	
-	
+
 }

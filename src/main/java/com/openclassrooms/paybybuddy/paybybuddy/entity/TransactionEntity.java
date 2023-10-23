@@ -3,6 +3,9 @@ package com.openclassrooms.paybybuddy.paybybuddy.entity;
 import java.sql.Timestamp;
 import org.hibernate.annotations.DynamicUpdate;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -44,12 +47,26 @@ public class TransactionEntity {
 
 	@Column(name = "transaction_description")
 	private String transactionDescription;
-/*
-	@OneToOne(
-			cascade = CascadeType.DETACH, 
-			orphanRemoval = true, 
-			fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_fk_id_transaction",referencedColumnName = "user_id")
-	private UserModel user;
-	*/
+
+	@JsonCreator
+	public TransactionEntity(
+			@JsonProperty("transactionId")Integer transactionId,
+			@JsonProperty("userIdOwner")Integer userIdOwner,
+			@JsonProperty("userIdTransaction")Integer userIdTransaction,
+			@JsonProperty("transactionDate")Timestamp transactionDate,
+			@JsonProperty("transactionSum")double transactionSum,
+			@JsonProperty("transactionFee")double transactionFee,
+			@JsonProperty("transactionSumFinal")double transactionSumFinal,
+			@JsonProperty("transactionDescription")String transactionDescription
+			) {
+		this.userIdOwner = userIdOwner;
+		this.userIdTransaction = userIdTransaction;
+		this.transactionDate = transactionDate;
+		this.transactionSum = transactionSum;
+		this.transactionFee = transactionFee;
+		this.transactionSumFinal = transactionSumFinal;
+		this.transactionDescription = transactionDescription;
+
+	}
+	
 }

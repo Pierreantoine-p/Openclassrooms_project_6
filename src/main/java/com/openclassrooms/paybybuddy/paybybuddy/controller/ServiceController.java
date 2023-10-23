@@ -20,9 +20,6 @@ public class ServiceController {
 	@Autowired
 	private ServiceService serviceService;
 	
-	@Autowired
-	private TransfertModelDTO transfertModelDTO;
-	
     private static final Logger logger = LogManager.getLogger(ServiceController.class);
 
 	/**

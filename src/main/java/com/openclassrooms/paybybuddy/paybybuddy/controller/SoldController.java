@@ -39,6 +39,7 @@ public class SoldController {
 	public ResponseEntity<SoldEntity> getById (@PathVariable Integer id){
 		logger.info("getallById, params: id={}", id);
 		SoldEntity result = soldService.getById(id);
+		logger.info("result: result={}", result );
 		return new ResponseEntity<>(result,HttpStatus.OK);
 	}
 	
@@ -52,7 +53,6 @@ public class SoldController {
 	public void update(@PathVariable(name = "id")Integer id,@PathVariable(name = "amount")double amount)  {
 		logger.info("update, params: id={}, params amount={}", id, amount);
 		soldService.update(id, amount);
-
 	}
 	
 }

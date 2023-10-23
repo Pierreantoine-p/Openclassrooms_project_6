@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,8 +19,6 @@ public class RelationService {
 	@Autowired
 	private RelationRepository relationRepository;
 
-	@Autowired
-	private ModelMapper modelMapper;
 
 	public RelationDTO convertToDTO(RelationEntity relationEntity, Set<Integer> processedEntities) {
 		if (relationEntity == null || processedEntities.contains(relationEntity.getRelationId())) {

@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -41,6 +40,7 @@ public class TransactionController {
 	public ResponseEntity<List<TransactionEntity>> getAllById (@PathVariable Integer id){
 		logger.info("getallById, params: id={}", id);
 		List<TransactionEntity> result = transactionService.getAllById(id);
+		logger.info("result: result={}", result );
 		return new ResponseEntity<>(result,HttpStatus.OK);
 	}
 

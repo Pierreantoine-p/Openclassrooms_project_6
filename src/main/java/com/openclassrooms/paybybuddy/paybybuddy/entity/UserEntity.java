@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.hibernate.annotations.DynamicUpdate;
 
+import com.fasterxml.jackson.annotation.JsonCreator;import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -39,7 +41,7 @@ public class UserEntity {
 
 	@Column(name = "user_password")
 	private String userPassword;
-	
+
 	@OneToMany(
 			cascade = CascadeType.DETACH, 
 			orphanRemoval = true, 
@@ -53,7 +55,7 @@ public class UserEntity {
 			fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id", referencedColumnName = "user_fk_id_sold")
 	private SoldEntity sold;
-	
+
 	@OneToMany(
 			cascade = CascadeType.DETACH, 
 			orphanRemoval = true, 
@@ -61,5 +63,24 @@ public class UserEntity {
 	@JoinColumn(name = "user_fk_id_owner_transaction")
 	private List<TransactionEntity> transactions;
 
+
+	@JsonCreator
+	public UserEntity(
+			@JsonProperty("userId")Integer userId,
+			@JsonProperty("userName")String userName,
+			@JsonProperty("userMail")String userMail,
+			@JsonProperty("userPassword")String userPassword,
+			@JsonProperty("relation")List<RelationEntity> relation,
+			@JsonProperty("sold")SoldEntity sold,
+			@JsonProperty("transactions")List<TransactionEntity> transactions
+			) {
+		this.userId = userId;
+		this.userName = userName;
+		this.userMail = userMail;
+		this.userPassword = userPassword;
+		this.relation = relation;
+		this.sold = sold;
+		this.transactions = transactions;
+	}
 
 }

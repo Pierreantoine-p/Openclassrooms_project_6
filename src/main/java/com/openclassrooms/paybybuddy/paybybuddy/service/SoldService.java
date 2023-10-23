@@ -14,8 +14,8 @@ public class SoldService {
 
 	@Autowired
 	private SoldRepository soldRepository;
-
-
+	//	@Before all create new user
+ 
 	/**
 	 * Get a user by id
 	 * @Param Integer : id
@@ -44,7 +44,7 @@ public class SoldService {
 	 * @Param Integer : id
 	 * @return new sold default 0 
 	 */
-	public SoldEntity create (Integer id) {
+	public SoldEntity save (Integer id) {
 		SoldEntity soldEntity = new SoldEntity();
 		soldEntity.setUserId(id);
 		return soldRepository.save(soldEntity);
