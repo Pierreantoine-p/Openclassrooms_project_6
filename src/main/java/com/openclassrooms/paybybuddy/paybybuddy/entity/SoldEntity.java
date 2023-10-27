@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 public class SoldEntity {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "sold_id")
 	private Integer soldId;
 

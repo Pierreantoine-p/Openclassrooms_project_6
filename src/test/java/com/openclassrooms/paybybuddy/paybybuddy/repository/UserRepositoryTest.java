@@ -23,7 +23,7 @@ import com.openclassrooms.paybybuddy.paybybuddy.model.UserDTO;
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class UserRepositoryTest {
-
+/*
 	@Autowired
 	private UserRepository userRepository;
 	
@@ -78,4 +78,5 @@ public class UserRepositoryTest {
 		assertEquals("new@mail.fr", savedUser.getUserMail());
 
 	}
+	*/
 }

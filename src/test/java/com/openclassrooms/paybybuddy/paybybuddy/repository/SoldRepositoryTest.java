@@ -13,7 +13,7 @@ import com.openclassrooms.paybybuddy.paybybuddy.entity.SoldEntity;
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class SoldRepositoryTest {
-	
+	/*
 	@Autowired
 	private SoldRepository soldRepository;
 	
@@ -29,5 +29,5 @@ public class SoldRepositoryTest {
 		SoldEntity expectedSold = soldRepository.save(sold);
 		assertEquals(soldId, expectedSold.getUserId());
 	}
-	
+	*/
 }

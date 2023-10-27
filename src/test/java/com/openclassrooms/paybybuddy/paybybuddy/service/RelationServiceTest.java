@@ -6,26 +6,38 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import com.openclassrooms.paybybuddy.paybybuddy.entity.RelationEntity;
 import com.openclassrooms.paybybuddy.paybybuddy.entity.SoldEntity;
 import com.openclassrooms.paybybuddy.paybybuddy.entity.TransactionEntity;
 import com.openclassrooms.paybybuddy.paybybuddy.entity.UserEntity;
 import com.openclassrooms.paybybuddy.paybybuddy.model.RelationDTO;
-
+@RunWith(SpringRunner.class)
+@ActiveProfiles("test")
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class RelationServiceTest {
 	
+	Integer userId = 1;
+	String userMail = "new@mail.fr";
+	
 	@Autowired
 	private RelationService relationService;
-
+	
+	@BeforeAll
+	public void createUser() {
+		
+	}
 	@Test
 	@Order(1)
 	public void testSave() {

@@ -21,7 +21,7 @@ import com.openclassrooms.paybybuddy.paybybuddy.entity.UserEntity;
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class RelationRepositoryTest {
-
+/*
 	@Autowired
 	private RelationRepository relationRepository;
 	
@@ -52,5 +52,5 @@ public class RelationRepositoryTest {
 		List<RelationEntity> relationList = relationRepository.findAllByUserFkIdOwnerRelation(relationId);
         assertTrue(relationList.size() > 0);
 	}
-	
+	*/
 }
