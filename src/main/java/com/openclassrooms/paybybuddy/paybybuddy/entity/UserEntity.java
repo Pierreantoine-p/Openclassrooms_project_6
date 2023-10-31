@@ -22,7 +22,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "person")
+@Table(name = "user")
 @Data
 @NoArgsConstructor
 @DynamicUpdate

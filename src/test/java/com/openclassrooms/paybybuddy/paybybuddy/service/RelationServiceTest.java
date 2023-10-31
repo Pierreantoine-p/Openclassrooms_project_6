@@ -12,58 +12,124 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.openclassrooms.paybybuddy.paybybuddy.PaybybuddyApplication;
 import com.openclassrooms.paybybuddy.paybybuddy.entity.RelationEntity;
 import com.openclassrooms.paybybuddy.paybybuddy.entity.SoldEntity;
 import com.openclassrooms.paybybuddy.paybybuddy.entity.TransactionEntity;
 import com.openclassrooms.paybybuddy.paybybuddy.entity.UserEntity;
 import com.openclassrooms.paybybuddy.paybybuddy.model.RelationDTO;
-@RunWith(SpringRunner.class)
+
 @ActiveProfiles("test")
-@SpringBootTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@SpringBootTest(classes = PaybybuddyApplication.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class RelationServiceTest {
-	
-	Integer userId = 1;
-	String userMail = "new@mail.fr";
+
+
 	
 	@Autowired
 	private RelationService relationService;
 	
+	@Autowired
+	private UserService userService;
+	
+	private Integer userFirstId = 1;
+	private Integer userSecondId = 2;
+
+	private String userFirstMail = "new@mail.fr";
+	private String userSecondMail = "toto@mail.fr";
+	
+	private UserEntity userEntity1;
+	private UserEntity userEntity2;
+	
+	private RelationEntity	relation1;
+
+	
 	@BeforeAll
-	public void createUser() {
+	@Transactional
+	void createUser() {
+
+		userEntity1 = new UserEntity();
+		userEntity2 = new UserEntity();
+		List<TransactionEntity> transaction1 = new ArrayList<TransactionEntity>();
+		List<TransactionEntity> transaction2 = new ArrayList<TransactionEntity>();
+		List<RelationEntity> relationAdd1 = new ArrayList<RelationEntity>();
+		List<RelationEntity> relationAdd2 = new ArrayList<RelationEntity>();
+		SoldEntity sold1 = new SoldEntity();
+		SoldEntity sold2 = new SoldEntity();
+
 		
+		userEntity1.setUserId(userFirstId);
+		userEntity1.setUserName("new");
+		userEntity1.setUserMail(userFirstMail);
+		userEntity1.setUserPassword("123456");
+		userEntity2.setRelation(relationAdd1);
+		userEntity1.setSold(sold1);
+		userEntity1.setTransactions(transaction1);
+
+		userEntity2.setUserId(userSecondId);
+		userEntity2.setUserName("toto");
+		userEntity2.setUserMail(userSecondMail);
+		userEntity2.setUserPassword("123456");
+		userEntity2.setRelation(relationAdd2);
+		userEntity2.setSold(sold2);
+		userEntity2.setTransactions(transaction2);
+		
+		userService.save(userEntity1);
+		userService.save(userEntity2);
+		
+		
+		RelationEntity relation1  = new RelationEntity();
+	
+
+		relation1.setRelationId(userFirstId);
+		relation1.setUser(userEntity1);
+		relation1.setUserFkIdOwnerRelation(userEntity2.getUserId());
+		
+		relationService.save(relation1);
+
+
+		
+		//userEntity1.getRelation().add(relation1);
+
+
+	
+		System.out.println("userEntity1 : " + userEntity1);
+
+		System.out.println("userEntity2 : " + userEntity2);
+
+
 	}
 	@Test
 	@Order(1)
 	public void testSave() {
 		
-		List<RelationEntity> relation = new ArrayList<RelationEntity>();
-		SoldEntity sold = new SoldEntity();
-		List<TransactionEntity> transaction = new ArrayList<TransactionEntity>();
+		RelationEntity relation2  = new RelationEntity();
 
-		UserEntity expectedUser = new UserEntity(1, "toto", "toto@mail.fr", "123456",relation, sold, transaction);
+		relation2.setRelationId(userSecondId);
+		relation2.setUser(userEntity2);
+		relation2.setUserFkIdOwnerRelation(userEntity1.getUserId());
+		relationService.save(relation2);
 		
-		RelationEntity expectedRelation = new RelationEntity();
-		Integer userFkIdOwnerRelation = 2;
-		expectedRelation.setUser(expectedUser);
-		expectedRelation.setUserFkIdOwnerRelation(userFkIdOwnerRelation);
-		relationService.save(expectedRelation);
-		
-		assertEquals(1, expectedRelation.getUser().getUserId());
-		assertEquals(userFkIdOwnerRelation, expectedRelation.getUserFkIdOwnerRelation());
+		assertEquals(userEntity2.getUserId(), relation2.getUser().getUserId());
 	}
 	
 	@Test
 	@Order(2)
 	public void testGetRelationsById() {
-		Integer relationId = 1;
-		List<RelationDTO> relationList = relationService.getRelationsById (relationId);
+
+		List<RelationDTO> relationList = relationService.getRelationsById(userSecondId);
+		System.out.println("relationList : " + relationList);
         assertTrue(relationList.size() > 0);
+        assertEquals(userSecondId, relationList.get(0).getUserIdOwner());
+
 	}
 	
 }

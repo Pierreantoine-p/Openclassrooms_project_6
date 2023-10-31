@@ -58,7 +58,6 @@ public class TransactionServiceTest {
 	public void testGetAllById() {
 		Integer transactionId = 1;
 		List<TransactionEntity> expectedTransaction = transactionService.getAllById(transactionId);
-		System.out.println("expectedTransaction.size() transaction : " + expectedTransaction.size());
         assertTrue(expectedTransaction.size() > 0);
 	}
 	

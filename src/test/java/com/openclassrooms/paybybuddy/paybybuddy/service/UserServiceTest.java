@@ -23,11 +23,6 @@ import com.openclassrooms.paybybuddy.paybybuddy.entity.SoldEntity;
 import com.openclassrooms.paybybuddy.paybybuddy.entity.TransactionEntity;
 import com.openclassrooms.paybybuddy.paybybuddy.entity.UserEntity;
 import com.openclassrooms.paybybuddy.paybybuddy.model.UserDTO;
-import com.openclassrooms.paybybuddy.paybybuddy.repository.RelationRepository;
-import com.openclassrooms.paybybuddy.paybybuddy.repository.SoldRepository;
-import com.openclassrooms.paybybuddy.paybybuddy.repository.TransactionRepository;
-import com.openclassrooms.paybybuddy.paybybuddy.repository.UserRepository;
-
 import org.springframework.transaction.annotation.Transactional;
 
 @ActiveProfiles("test")
@@ -36,137 +31,51 @@ import org.springframework.transaction.annotation.Transactional;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class UserServiceTest {
 
-	
-
-
 	@Autowired
 	private UserService userService;
 
-	@Autowired
-	private RelationService relationService;
+	private Integer firstId = 1;
+	private Integer secondId = 2;
 
-	@Autowired
-	private SoldService soldService;
-
-	@Autowired
-	private TransactionService transactionService;
+	private String userFirstMail = "new@mail.fr";
+	private String userSecondMail = "toto@mail.fr";
 	
-	@Autowired
-	private TransactionRepository transactionRepository ;
-
-	@Autowired
-	private UserRepository userRepository ;
-
-	@Autowired
-	private SoldRepository soldRepository ;
-
-	@Autowired
-	private RelationRepository relationRepository ;
-	
-
-	
+	private UserEntity userFirst;
+	private UserEntity userSecond;
+		
 	@BeforeAll
 	@Transactional
 	void createUser() {
-
-		Integer userId = 1;
-		Integer userIdTwo = 2;
-
-		String userMail1 = "new@mail.fr";
-		String userMail2 = "toto@mail.fr";
-
-//		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+		userFirst = new UserEntity();
+		userSecond = new UserEntity();
 		
-		SoldEntity sold1 = new SoldEntity();
-		SoldEntity sold2 = new SoldEntity();
-
-		List<TransactionEntity> transaction1 = new ArrayList<TransactionEntity>();
-		List<TransactionEntity> transaction2 = new ArrayList<TransactionEntity>();
-		List<RelationEntity> relationAdd1 = new ArrayList<RelationEntity>();
-		List<RelationEntity> relationAdd2 = new ArrayList<RelationEntity>();
-
-		UserEntity userEntity1 = new UserEntity();
-		userEntity1.setUserId(userId);
-		userEntity1.setUserName("new");
-		userEntity1.setUserMail(userMail1);
-		userEntity1.setUserPassword("123456");
-		userEntity1.setRelation(relationAdd1);
-		userEntity1.setSold(sold1);
-		userEntity1.setTransactions(transaction1);
-
-		UserEntity userEntity2 = new UserEntity();
-		userEntity2.setUserId(userIdTwo);
-		userEntity2.setUserName("toto");
-		userEntity2.setUserMail(userMail2);
-		userEntity2.setUserPassword("123456");
-		userEntity2.setRelation(relationAdd2);
-		userEntity2.setSold(sold2);
-		userEntity2.setTransactions(transaction2);
-
-		userService.save(userEntity1);
-		userService.save(userEntity2);
-		/*
-		RelationEntity relation1  = new RelationEntity();
-		RelationEntity relation2  = new RelationEntity();
-
-/*
-		relation1.setRelationId(1);
-		relation1.setUser(userEntity1);
-		relation1.setUserFkIdOwnerRelation(userEntity2.getUserId());
-		relationAdd1.add(relation1);
+		List<TransactionEntity> transactionUserFirst = new ArrayList<TransactionEntity>();
+		List<TransactionEntity> transactionUserSecond = new ArrayList<TransactionEntity>();
 		
-		relation2.setRelationId(2);
-		relation2.setUser(userEntity2);
-		relation2.setUserFkIdOwnerRelation(1);
-		relationAdd2.add(relation2);
-
+		List<RelationEntity> listRelationUserFirst = new ArrayList<RelationEntity>();
+		List<RelationEntity> listRelationUserSecond = new ArrayList<RelationEntity>();
 		
-		//System.out.println("relationAdd1 : " + relationAdd1);
-		//System.out.println("relationAdd2 : " + relationAdd2);
+		SoldEntity soldUserFirst = new SoldEntity();
+		SoldEntity soldUserSecond = new SoldEntity();
+
+		userFirst.setUserId(firstId);
+		userFirst.setUserName("new");
+		userFirst.setUserMail(userFirstMail);
+		userFirst.setUserPassword("123456");
+		userSecond.setRelation(listRelationUserFirst);
+		userFirst.setSold(soldUserFirst);
+		userFirst.setTransactions(transactionUserFirst);
+
+		userSecond.setUserId(secondId);
+		userSecond.setUserName("toto");
+		userSecond.setUserMail(userSecondMail);
+		userSecond.setUserPassword("123456");
+		userSecond.setRelation(listRelationUserSecond);
+		userSecond.setSold(soldUserSecond);
+		userSecond.setTransactions(transactionUserSecond);
 		
-		relationService.save(relation1);
-		relationService.save(relation2);
-
-		sold1.setSoldId(userId);
-		sold1.setSoldSum(55.10);
-		sold1.setUserId(userId);
-
-		sold2.setSoldId(userIdTwo);
-		sold2.setSoldSum(23.65);
-		sold2.setUserId(userIdTwo);
-
-		soldService.save(userId);
-		soldService.save(userIdTwo);
-
-
-		TransactionEntity transactionEntity1 = new TransactionEntity();
-		transactionEntity1.setTransactionId(userId);
-		transactionEntity1.setTransactionDate(timestamp);
-		transactionEntity1.setTransactionDescription("description");
-		transactionEntity1.setTransactionFee(10);
-		transactionEntity1.setTransactionSum(5);
-		transactionEntity1.setTransactionSumFinal(15);
-		transactionEntity1.setUserIdOwner(userId);
-		transactionEntity1.setUserIdTransaction(userIdTwo);
-		transaction1.add(transactionEntity1);
-
-		TransactionEntity transactionEntity2 = new TransactionEntity();
-		transactionEntity2.setTransactionId(userIdTwo);
-		transactionEntity2.setTransactionDate(timestamp);
-		transactionEntity2.setTransactionDescription("description");
-		transactionEntity2.setTransactionFee(15);
-		transactionEntity2.setTransactionSum(5);
-		transactionEntity2.setTransactionSumFinal(20);
-		transactionEntity2.setUserIdOwner(userIdTwo);
-		transactionEntity2.setUserIdTransaction(userId);
-		transaction2.add(transactionEntity2);
-
-		transactionService.save(userId, userIdTwo, 10, 5, 15, "description");
-		transactionService.save(userIdTwo, userId, 7.50, 3.50, 12, "description");
-		*/
-		System.out.println("userEntity1 : " + userEntity1);
-		System.out.println("userEntity2 : " + userEntity2);
-	
+		userService.save(userFirst);
+		userService.save(userSecond);
 
 	}
 	
@@ -176,26 +85,21 @@ public class UserServiceTest {
 		Iterable<UserDTO> getAllUser = userService.getAll();
 		List<UserDTO> userList = new ArrayList<>();
 		getAllUser.forEach(userList::add);
-		System.out.println("Nom de zeus : " + userList);
-
 		assertTrue(userList.size() > 0);
 	}
 
 	@Test
 	@Order(2)
 	public void testGetUserById() {
-		Optional<UserDTO> userOptional = userService.getUserById(1);
-		System.out.println("Nom de zeus : " + userOptional);
-
-		assertEquals(1,userOptional.get().getUserId() );
+		Optional<UserDTO> userOptional = userService.getUserById(firstId);
+		assertEquals(firstId,userOptional.get().getUserId() );
 	}
 
 	@Test
 	@Order(3)
 	public void testGetUserByMail() {
-		Optional<UserDTO> userOptional = userService.getUserByMail("new@mail.fr");
-		System.out.println("Nom de zeus : " + userOptional);
-		assertEquals("new@mail.fr",userOptional.get().getUserMail() );
+		Optional<UserDTO> userOptional = userService.getUserByMail(userFirstMail);
+		assertEquals(userFirstMail,userOptional.get().getUserMail() );
 	}
 
 	@Test
@@ -204,13 +108,9 @@ public class UserServiceTest {
 
 		List<RelationEntity> relation = new ArrayList<RelationEntity>();
 		SoldEntity sold = new SoldEntity();
-		Integer userId = 2;
-		sold.setSoldSum(0);
-		sold.setUserId(userId + 1 );
 
 		List<TransactionEntity> transaction = new ArrayList<TransactionEntity>();
 		UserEntity expectedUser = new UserEntity();
-		expectedUser.setUserId(userId + 1);
 		expectedUser.setUserName("tata");
 		expectedUser.setUserMail("tata@mail.fr");
 		expectedUser.setUserPassword("123456");
