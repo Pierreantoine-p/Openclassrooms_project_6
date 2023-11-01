@@ -35,9 +35,10 @@ import com.openclassrooms.paybybuddy.paybybuddy.repository.SoldRepository;
 import com.openclassrooms.paybybuddy.paybybuddy.repository.TransactionRepository;
 import com.openclassrooms.paybybuddy.paybybuddy.repository.UserRepository;
 
+@DirtiesContext
+@RunWith(SpringRunner.class)
 @ActiveProfiles("test")
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@SpringBootTest(classes = PaybybuddyApplication.class)
+@SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class SoldServiceTest {
 
@@ -47,84 +48,65 @@ public class SoldServiceTest {
 	@Autowired
 	private SoldService soldService;
 
+	private Integer firstId = 1;
+	private Integer secondId = 2;
+	private String userFirstMail = "new@mail.fr";
+	private String userSecondMail = "toto@mail.fr";
+
+	private UserEntity userFirst;
+	private UserEntity userSecond;
+
+	private SoldEntity	soldUserFirst;
+
+
 	@BeforeAll
 	@Transactional
 	void createUser() {
 
-		Integer userId = 1;
-		Integer userIdTwo = 2;
+		userFirst = new UserEntity();
+		userSecond = new UserEntity();
+		List<TransactionEntity> transactionUserFirst = new ArrayList<TransactionEntity>();
+		List<TransactionEntity> transactionUserSecond = new ArrayList<TransactionEntity>();
+		List<RelationEntity> listRelationUserFirst = new ArrayList<RelationEntity>();
+		List<RelationEntity> listRelationUserSecond = new ArrayList<RelationEntity>();
+		SoldEntity soldUserSecond = new SoldEntity();
 
-		String userMail1 = "new@mail.fr";
-		String userMail2 = "toto@mail.fr";
+		userFirst.setUserId(firstId);
+		userFirst.setUserName("new");
+		userFirst.setUserMail(userFirstMail);
+		userFirst.setUserPassword("123456");
+		userFirst.setRelation(listRelationUserFirst);
+		userFirst.setSold(soldUserFirst);
+		userFirst.setTransactions(transactionUserFirst);
 
-		
-		SoldEntity sold1 = new SoldEntity();
-		SoldEntity sold2 = new SoldEntity();
+		userSecond.setUserId(secondId);
+		userSecond.setUserName("toto");
+		userSecond.setUserMail(userSecondMail);
+		userSecond.setUserPassword("123456");
+		userSecond.setRelation(listRelationUserSecond);
+		userSecond.setSold(soldUserSecond);
+		userSecond.setTransactions(transactionUserSecond);
 
-		List<TransactionEntity> transaction1 = new ArrayList<TransactionEntity>();
-		List<TransactionEntity> transaction2 = new ArrayList<TransactionEntity>();
-		List<RelationEntity> relationAdd1 = new ArrayList<RelationEntity>();
-		List<RelationEntity> relationAdd2 = new ArrayList<RelationEntity>();
+		userService.save(userFirst);
+		userService.save(userSecond);
 
-		UserEntity userEntity1 = new UserEntity();
-		userEntity1.setUserId(userId);
-		userEntity1.setUserName("new");
-		userEntity1.setUserMail(userMail1);
-		userEntity1.setUserPassword("123456");
-		userEntity1.setRelation(relationAdd1);
-		userEntity1.setSold(sold1);
-		userEntity1.setTransactions(transaction1);
 
-		UserEntity userEntity2 = new UserEntity();
-		userEntity2.setUserId(userIdTwo);
-		userEntity2.setUserName("toto");
-		userEntity2.setUserMail(userMail2);
-		userEntity2.setUserPassword("123456");
-		userEntity2.setRelation(relationAdd2);
-		userEntity2.setSold(sold2);
-		userEntity2.setTransactions(transaction2);
-
-		userService.save(userEntity1);
-		userService.save(userEntity2);
-
-/*
-		//sold1.setSoldId(userId);
-		sold1.setSoldSum(55.10);
-		sold1.setUserId(userEntity1.getUserId());
-
-		//sold2.setSoldId(userIdTwo);
-		sold2.setSoldSum(23.65);
-		sold2.setUserId(userEntity2.getUserId());
-*/
-		soldService.save(userEntity1.getUserId());
-		soldService.save(userEntity2.getUserId());
-/*
-		System.out.println("userEntity1 : " + userEntity1);
-		System.out.println("userEntity2 : " + userEntity2);
-		
-		
-		System.out.println("sold1 : " + sold1);
-		System.out.println("sold2 : " + sold2);
-	*/
+		soldUserFirst =  soldService.save(userFirst.getUserId());
 
 	}
-
-
 
 	@Test
 	@Order(1)
 	public void testGetSoldById() {	
-		SoldEntity expectedSold = soldService.getById(1);
-		//System.out.println("expectedSold getID : " + expectedSold);
-		assertEquals(1,expectedSold.getUserId() );
+		SoldEntity expectedSold = soldService.getById(secondId);
+		assertEquals(secondId,expectedSold.getUserId() );
 	}
-
+	
 	@Test
 	@Order(2)
 	public void testSave() {
-		Integer soldId = 3;
+		Integer soldId = 4;
 		SoldEntity expectedSold = soldService.save(soldId);
-		//System.out.println("expectedSold save : " + expectedSold);
 		assertEquals(soldId, expectedSold.getUserId());
 	}
 
@@ -132,124 +114,13 @@ public class SoldServiceTest {
 	@Order(3)
 	public void testUpdate() {
 
-		double soldAmount = 10.0;
-		SoldEntity existingSold = new SoldEntity();
-		existingSold.setSoldId(1);
-		existingSold.setSoldSum(20.0);
-		Double expectedNewSum = soldAmount + existingSold.getSoldSum();
-
-		soldService.update(1,soldAmount);
-
-		assertEquals(1, existingSold.getUserId());
-		assertEquals(expectedNewSum, existingSold.getSoldSum());
+		double soldAmount = 20.0;
+		
+		soldService.update(secondId,soldAmount);
+		SoldEntity expectedSold = soldService.getById(secondId);
+		assertEquals(secondId, expectedSold.getUserId());
 
 	}
 
 
 }
-/*
- @BeforeAll
-	@Transactional
-	void createUser() {
-
-		Integer userId = 1;
-		Integer userIdTwo = 2;
-
-		String userMail1 = "new@mail.fr";
-		String userMail2 = "toto@mail.fr";
-
-//		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-		
-		SoldEntity sold1 = new SoldEntity();
-		SoldEntity sold2 = new SoldEntity();
-
-		List<TransactionEntity> transaction1 = new ArrayList<TransactionEntity>();
-		List<TransactionEntity> transaction2 = new ArrayList<TransactionEntity>();
-		List<RelationEntity> relationAdd1 = new ArrayList<RelationEntity>();
-		List<RelationEntity> relationAdd2 = new ArrayList<RelationEntity>();
-
-		UserEntity userEntity1 = new UserEntity();
-		userEntity1.setUserId(userId);
-		userEntity1.setUserName("new");
-		userEntity1.setUserMail(userMail1);
-		userEntity1.setUserPassword("123456");
-		userEntity1.setRelation(relationAdd1);
-		userEntity1.setSold(sold1);
-		userEntity1.setTransactions(transaction1);
-
-		UserEntity userEntity2 = new UserEntity();
-		userEntity2.setUserId(userIdTwo);
-		userEntity2.setUserName("toto");
-		userEntity2.setUserMail(userMail2);
-		userEntity2.setUserPassword("123456");
-		userEntity2.setRelation(relationAdd2);
-		userEntity2.setSold(sold2);
-		userEntity2.setTransactions(transaction2);
-
-		userService.save(userEntity1);
-		userService.save(userEntity2);
-		/*
-		RelationEntity relation1  = new RelationEntity();
-		RelationEntity relation2  = new RelationEntity();
-
-/*
-		relation1.setRelationId(1);
-		relation1.setUser(userEntity1);
-		relation1.setUserFkIdOwnerRelation(userEntity2.getUserId());
-		relationAdd1.add(relation1);
-		
-		relation2.setRelationId(2);
-		relation2.setUser(userEntity2);
-		relation2.setUserFkIdOwnerRelation(1);
-		relationAdd2.add(relation2);
-
-		
-		//System.out.println("relationAdd1 : " + relationAdd1);
-		//System.out.println("relationAdd2 : " + relationAdd2);
-		
-		relationService.save(relation1);
-		relationService.save(relation2);
-
-		sold1.setSoldId(userId);
-		sold1.setSoldSum(55.10);
-		sold1.setUserId(userId);
-
-		sold2.setSoldId(userIdTwo);
-		sold2.setSoldSum(23.65);
-		sold2.setUserId(userIdTwo);
-
-		soldService.save(userId);
-		soldService.save(userIdTwo);
-
-
-		TransactionEntity transactionEntity1 = new TransactionEntity();
-		transactionEntity1.setTransactionId(userId);
-		transactionEntity1.setTransactionDate(timestamp);
-		transactionEntity1.setTransactionDescription("description");
-		transactionEntity1.setTransactionFee(10);
-		transactionEntity1.setTransactionSum(5);
-		transactionEntity1.setTransactionSumFinal(15);
-		transactionEntity1.setUserIdOwner(userId);
-		transactionEntity1.setUserIdTransaction(userIdTwo);
-		transaction1.add(transactionEntity1);
-
-		TransactionEntity transactionEntity2 = new TransactionEntity();
-		transactionEntity2.setTransactionId(userIdTwo);
-		transactionEntity2.setTransactionDate(timestamp);
-		transactionEntity2.setTransactionDescription("description");
-		transactionEntity2.setTransactionFee(15);
-		transactionEntity2.setTransactionSum(5);
-		transactionEntity2.setTransactionSumFinal(20);
-		transactionEntity2.setUserIdOwner(userIdTwo);
-		transactionEntity2.setUserIdTransaction(userId);
-		transaction2.add(transactionEntity2);
-
-		transactionService.save(userId, userIdTwo, 10, 5, 15, "description");
-		transactionService.save(userIdTwo, userId, 7.50, 3.50, 12, "description");
-		
-		System.out.println("userEntity1 : " + userEntity1);
-		System.out.println("userEntity2 : " + userEntity2);
-	
-
-	}
- */

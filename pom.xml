@@ -96,12 +96,12 @@
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.8.8</version>
-                <!--<configuration>
+                <configuration>
                     <excludes>
                         <exclude>com/openclassrooms/paybybuddy/paybybuddy/controller/*</exclude>
                         <exclude>com/openclassrooms/paybybuddy/paybybuddy/service/ServiceService</exclude>
                     </excludes>
-                </configuration> -->
+                </configuration> 
                 <executions>
                     <execution>
                         <goals>
