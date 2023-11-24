@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -16,6 +17,7 @@ import com.openclassrooms.paybybuddy.paybybuddy.service.SoldService;
 
 
 @RestController
+@CrossOrigin
 @RequestMapping("/sold")
 public class SoldController {
 	
@@ -28,7 +30,6 @@ public class SoldController {
 		this.soldService = soldService;
 	}
     
-    //récupérer un sold d'u iduser
 
 	/**
 	 * Get all transaction sort by userId

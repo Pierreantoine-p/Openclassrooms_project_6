@@ -5,7 +5,9 @@ import java.util.List;
 
 import org.hibernate.annotations.DynamicUpdate;
 
-import com.fasterxml.jackson.annotation.JsonCreator;import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -41,7 +43,8 @@ public class UserEntity {
 
 	@Column(name = "user_password")
 	private String userPassword;
-
+	
+	 @JsonIgnore
 	@OneToMany(
 			cascade = CascadeType.DETACH, 
 			orphanRemoval = true, 

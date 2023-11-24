@@ -12,6 +12,9 @@ import com.openclassrooms.paybybuddy.paybybuddy.entity.UserEntity;
 import com.openclassrooms.paybybuddy.paybybuddy.model.UserDTO;
 import com.openclassrooms.paybybuddy.paybybuddy.repository.UserRepository;
 
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+
 
 
 @Service
@@ -30,6 +33,15 @@ public class UserService {
 		userDTO.setUserMail(userEntity.getUserMail());
 		userDTO.setUserPassword(userEntity.getUserPassword());
 		return userDTO;
+	}
+
+	@SuppressWarnings("deprecation")
+	public String generateToken(String userEmail) {
+		String secretKey = "yourSecretKey"; 
+		return Jwts.builder()
+				.setSubject(userEmail)
+				.signWith(SignatureAlgorithm.HS256, secretKey)
+				.compact();
 	}
 
 	/**
@@ -79,6 +91,27 @@ public class UserService {
 		UserEntity newUser = userRepository.save(userEntity);
 		newUser.setSold(soldService.save(newUser.getUserId()));
 		return userEntity;
+	}
+
+	/**
+	 * get one user for auth 
+	 * @Param String : userMail
+	 * @Param String : userPassword
+	 */
+	@Transactional
+	public UserDTO auth (String userMail, String userPassword){
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		passwordEncoder.encode(userPassword);
+		Optional<UserEntity> authUser = userRepository.findByuserMail(userMail);
+		if(authUser.isPresent()) {
+			UserDTO entityToDTO = convertToDTO(authUser.get());
+			if(entityToDTO.getUserPassword().equals(userPassword) ){
+				return entityToDTO;
+			}else {
+				return null;
+			}
+		}
+		return null;
 	}
 
 
