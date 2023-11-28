@@ -14,6 +14,15 @@ Avant de commencer, assurez-vous d'avoir les éléments suivants installés sur 
     Java Development Kit (JDK) (version 11 ou supérieure recommandée)
     Maven (outil de gestion de projet pour Java)
     IDE (comme IntelliJ IDEA ou Eclipse) pour une facilité de développement
+    MySQL Server installé localement ou accessible à distance
+
+<h2>Configuration de la base de données</h2>
+
+1. Assurez-vous que votre serveur MySQL est en cours d'exécution
+2. Configurations de la base de données dans le projet Spring Boot :
+   - Ouvrez le fichier src/main/resources/application.properties.
+   - Ajoutez les détails de connexion à votre base de données MySQL 
+4. Créez une base de données pour le projet en executant le code bdd.sql
 
 <h2>Installation et exécution</h2>
 
