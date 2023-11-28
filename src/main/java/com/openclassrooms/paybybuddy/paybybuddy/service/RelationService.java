@@ -59,18 +59,6 @@ public class RelationService {
 		return relationDTO;	
 	}
 
-	/**
-	 *Get one relation by id_user
-	 *@Param String : id
-	 * @return One relation sort by id_user
-	 */
-	/*
-	public RelationDTO getRelationById(Integer userIdOwner, Integer userUserId){
-		RelationEntity relationEntity = relationRepository.findByUserIds(userIdOwner, userUserId);
-		RelationDTO relationDTO = modelMapper.map(relationEntity, RelationDTO.class);
-		return relationDTO;
-	}
-*/
 
 }
 

@@ -26,7 +26,7 @@ import lombok.NoArgsConstructor;
 public class RelationEntity {
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "relation_id")
 	private Integer relationId;
 

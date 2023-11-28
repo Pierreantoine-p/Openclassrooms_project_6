@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -16,7 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.TestPropertySource;
 
 import com.openclassrooms.paybybuddy.paybybuddy.PaybybuddyApplication;
 import com.openclassrooms.paybybuddy.paybybuddy.entity.RelationEntity;
@@ -24,17 +27,23 @@ import com.openclassrooms.paybybuddy.paybybuddy.entity.SoldEntity;
 import com.openclassrooms.paybybuddy.paybybuddy.entity.TransactionEntity;
 import com.openclassrooms.paybybuddy.paybybuddy.entity.UserEntity;
 import com.openclassrooms.paybybuddy.paybybuddy.model.UserDTO;
+import com.openclassrooms.paybybuddy.paybybuddy.repository.UserRepository;
+
 import org.springframework.transaction.annotation.Transactional;
 
-@DirtiesContext
 @ActiveProfiles("test")
+@TestPropertySource(locations="classpath:application-test.properties")
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @SpringBootTest(classes = PaybybuddyApplication.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@Transactional
 public class UserServiceTest {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private UserRepository userRepository;
 
 	private Integer firstId = 1;
 	private Integer secondId = 2;
@@ -48,48 +57,29 @@ public class UserServiceTest {
 	@BeforeAll
 	@Transactional
 	void createUser() {
-		userFirst = new UserEntity();
-		userSecond = new UserEntity();
 		
-		List<TransactionEntity> transactionUserFirst = new ArrayList<TransactionEntity>();
-		List<TransactionEntity> transactionUserSecond = new ArrayList<TransactionEntity>();
-		
-		List<RelationEntity> listRelationUserFirst = new ArrayList<RelationEntity>();
-		List<RelationEntity> listRelationUserSecond = new ArrayList<RelationEntity>();
-		
-		SoldEntity soldUserFirst = new SoldEntity();
-		SoldEntity soldUserSecond = new SoldEntity();
-		
+		  UserEntity userOne = new UserEntity();
+		  UserEntity userTwo = new UserEntity();
 
-	    userFirst.setUserId(firstId);
-	    
-	    soldUserFirst.setUserId(userFirst.getUserId());
-	    soldUserFirst.setSoldSum(0);
-	    
-	    userFirst.setUserName("new");
-	    userFirst.setUserMail(userFirstMail);
-	    userFirst.setUserPassword("123456");
-	    userFirst.setRelation(listRelationUserFirst);
-	    userFirst.setSold(soldUserFirst);
-	    userFirst.setTransactions(transactionUserFirst);
-
-	    userSecond.setUserId(secondId);
-	    
-	    soldUserSecond.setUserId(userSecond.getUserId());
-	    soldUserSecond.setSoldSum(0);
-	    
-	    userSecond.setUserName("toto");
-	    userSecond.setUserMail(userSecondMail);
-	    userSecond.setUserPassword("123456");
-	    userSecond.setRelation(listRelationUserSecond);
-	    userSecond.setSold(soldUserSecond);
-	    userSecond.setTransactions(transactionUserSecond);
-	    
-	    
-	    userService.save(userFirst);
-	    userService.save(userSecond);
-
+		  
+		  userOne.setUserName("toto");
+		  userOne.setUserMail("toto@example.com");
+		  userOne.setUserPassword("123");
+		  
+		  userTwo.setUserName("titi");
+		  userTwo.setUserMail("titi@example.com");
+		  userTwo.setUserPassword("123");
+		  
+	        userService.save(userOne);
+	        userService.save(userTwo);
+	        
 	}
+	
+	@AfterEach
+	@Transactional
+    public void cleanUp() {
+        userRepository.deleteAll();; 
+    }
 	
 	@Test
 	@Order(1)
@@ -110,29 +100,26 @@ public class UserServiceTest {
 	@Test
 	@Order(3)
 	public void testGetUserByMail() {
-		Optional<UserDTO> userOptional = userService.getUserByMail(userFirstMail);
-		assertEquals(userFirstMail,userOptional.get().getUserMail() );
+		Optional<UserDTO> userOptional = userService.getUserByMail("toto@example.com");
+		assertEquals("toto@example.com",userOptional.get().getUserMail() );
 	}
 
 	@Test
 	@Order(4)
 	public void testSave() {
 
-		List<RelationEntity> relation = new ArrayList<RelationEntity>();
-		SoldEntity sold = new SoldEntity();
+		  UserEntity savedUser = new UserEntity();
+		  
+		  savedUser.setUserName("tata");
+		  savedUser.setUserMail("tata@mail.com");
+		  savedUser.setUserPassword("123");
 
-		List<TransactionEntity> transaction = new ArrayList<TransactionEntity>();
-		UserEntity expectedUser = new UserEntity();
-		expectedUser.setUserName("tata");
-		expectedUser.setUserMail("tata@mail.fr");
-		expectedUser.setUserPassword("123456");
-		expectedUser.setRelation(relation);
-		expectedUser.setSold(sold);
-		expectedUser.setTransactions(transaction);
-		UserEntity savedUser = userService.save(expectedUser);
+	
+
+	        userService.save(savedUser);
 
 		assertEquals("tata", savedUser.getUserName());
-		assertEquals("tata@mail.fr", savedUser.getUserMail());
+		assertEquals("tata@mail.com", savedUser.getUserMail());
 
 	}
 

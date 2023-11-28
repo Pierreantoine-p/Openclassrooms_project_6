@@ -26,7 +26,6 @@ public class ServiceController {
 
 	/**
 	 * Create one transfert between two users
-	 * 
 	 * @RequestBody TransfertModelDTO : transfertModelDTO
 	 * @return transfertModelDTO
 	 */

@@ -46,31 +46,5 @@ public class TransactionController {
 		return new ResponseEntity<>(result,HttpStatus.OK);
 	}
 
-	/**
-	 * Get one transaction by id
-	 * @Param Integer : id
-	 * @return One transaction  
-	 */
-	/*
-	@GetMapping("/{id}")
-	public ResponseEntity<TransactionModel> getOne (@PathVariable Integer id){
-		logger.info("getOneById, params: id={}", id);
-		 Optional<TransactionModel> optionalValue = transactionService.getUserById(id);
-		 List<TransactionModel> resultList = optionalToList(optionalValue);
-		if(!resultList.isEmpty()) {
-			System.out.println("here");
-			return new ResponseEntity<>(resultList.get(0),HttpStatus.OK);
-		}else {
-
-			return new ResponseEntity<>(HttpStatus.OK);
-		}
-	}
-	 */
-
-
-
-
-
-
 
 }

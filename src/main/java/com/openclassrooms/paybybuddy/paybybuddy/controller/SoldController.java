@@ -20,16 +20,16 @@ import com.openclassrooms.paybybuddy.paybybuddy.service.SoldService;
 @CrossOrigin
 @RequestMapping("/sold")
 public class SoldController {
-	
+
 	@Autowired
 	private SoldService soldService;
-	
-    private static final Logger logger = LogManager.getLogger(SoldController.class);
 
-    public SoldController(SoldService soldService) {
+	private static final Logger logger = LogManager.getLogger(SoldController.class);
+
+	public SoldController(SoldService soldService) {
 		this.soldService = soldService;
 	}
-    
+
 
 	/**
 	 * Get all transaction sort by userId
@@ -43,7 +43,7 @@ public class SoldController {
 		logger.info("result: result={}", result );
 		return new ResponseEntity<>(result,HttpStatus.OK);
 	}
-	
+
 	/**
 	 * Update a sold
 	 * @Param Integer : id
@@ -55,5 +55,5 @@ public class SoldController {
 		logger.info("update, params: id={}, params amount={}", id, amount);
 		soldService.update(id, amount);
 	}
-	
+
 }

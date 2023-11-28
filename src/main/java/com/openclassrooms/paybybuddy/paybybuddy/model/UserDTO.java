@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class UserDTO {
-	
+
 	private Integer userId;
 
 	private String userName;
@@ -15,7 +15,7 @@ public class UserDTO {
 	private String userMail;
 
 	private String userPassword;
-	
+
 	public UserDTO(Integer userId, String userName, String userMail, String userPassword) {
 		this.userId = userId;
 		this.userName = userName;

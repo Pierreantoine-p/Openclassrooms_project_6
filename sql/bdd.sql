@@ -1,12 +1,7 @@
+DROP DATABASE paymybuddy;
+
 CREATE DATABASE IF NOT EXISTS paymybuddy;
 USE paymybuddy;
-
-
-
-
-
-
-
 
 create table user(
 USER_ID integer PRIMARY KEY AUTO_INCREMENT ,

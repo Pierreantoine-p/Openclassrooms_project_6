@@ -29,7 +29,7 @@ public class ServiceService {
 		this.soldService = soldService;
 		this.soldRepository = soldRepository;
 	}
-	
+
 	/**
 	 * create new transfert between two users
 	 * @Param TransfertModelDTO : transfertModelDTO
@@ -49,12 +49,12 @@ public class ServiceService {
 		double sumFinal = sum + fee ;
 
 		TransactionEntity result = new TransactionEntity();
-		
+
 		if(existingSoldOwner.getSoldSum() >= sumFinal) {
 			double newValueOwner = existingSoldOwner.getSoldSum() - sumFinal ;
 			System.out.println("newValueOwner: " + newValueOwner);
 			soldService.update(transfertModelDTO.getUseridOwner(), newValueOwner);
-			
+
 			double newValueRelation = existingSoldRelation.getSoldSum() + sum;
 			System.out.println("newValueRelation : " + newValueRelation);
 			soldService.update(transfertModelDTO.getUserfkIdRelation(), newValueRelation);

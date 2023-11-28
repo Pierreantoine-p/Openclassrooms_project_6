@@ -9,12 +9,8 @@ import com.openclassrooms.paybybuddy.paybybuddy.entity.RelationEntity;
 @Repository
 public interface RelationRepository extends CrudRepository<RelationEntity, Integer> {
 
-	
-    List<RelationEntity> findAllByUserFkIdOwnerRelation (Integer userId);
 
-    
-	//public RelationEntity findByUserIds (Integer userIdOwner, Integer userUserId);
+	List<RelationEntity> findAllByUserFkIdOwnerRelation (Integer userId);
 
 
-	
 }

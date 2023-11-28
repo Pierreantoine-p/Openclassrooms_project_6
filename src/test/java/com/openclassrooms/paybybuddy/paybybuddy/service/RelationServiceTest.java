@@ -27,11 +27,11 @@ import com.openclassrooms.paybybuddy.paybybuddy.entity.TransactionEntity;
 import com.openclassrooms.paybybuddy.paybybuddy.entity.UserEntity;
 import com.openclassrooms.paybybuddy.paybybuddy.model.RelationDTO;
 
-@DirtiesContext
 @ActiveProfiles("test")
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @SpringBootTest(classes = PaybybuddyApplication.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@Transactional
 public class RelationServiceTest {
 
 
@@ -48,8 +48,8 @@ public class RelationServiceTest {
 	private String userFirstMail = "new@mail.fr";
 	private String userSecondMail = "toto@mail.fr";
 	
-	private UserEntity userFirst;
-	private UserEntity userSecond;
+	private UserEntity userOne;
+	private UserEntity userTwo;
 	
 	private RelationEntity	relationUserFirst;
 
@@ -57,7 +57,37 @@ public class RelationServiceTest {
 	@BeforeAll
 	@Transactional
 	void createUser() {
+		
+		List<RelationEntity> listRelationUserFirst = new ArrayList<RelationEntity>();
 
+		  UserEntity userOne = new UserEntity();
+		  UserEntity userTwo = new UserEntity();
+
+		  
+		  userOne.setUserName("toto");
+		  userOne.setUserMail("toto@example.com");
+		  userOne.setUserPassword("123");
+		  userOne.setRelation(listRelationUserFirst);
+		  
+		  userTwo.setUserName("titi");
+		  userTwo.setUserMail("titi@example.com");
+		  userTwo.setUserPassword("123");
+		  
+	        userService.save(userOne);
+	        userService.save(userTwo);
+	        
+	    	relationUserFirst  = new RelationEntity();
+
+			relationUserFirst.setRelationId(1);
+			relationUserFirst.setUser(userOne);
+			relationUserFirst.setUserFkIdOwnerRelation(2);
+			
+			RelationEntity result = relationService.save(relationUserFirst);
+			listRelationUserFirst.add(relationUserFirst);
+			System.out.println("Nom de zeus : " + result);
+			System.out.println("Nom de zeus : " + userOne);
+
+/*
 		userFirst = new UserEntity();
 		userSecond = new UserEntity();
 		List<TransactionEntity> transactionUserFirst = new ArrayList<TransactionEntity>();
@@ -94,7 +124,7 @@ public class RelationServiceTest {
 		relationUserFirst.setUserFkIdOwnerRelation(userSecond.getUserId());
 		
 		relationService.save(relationUserFirst);
-
+*/
 	}
 	@Test
 	@Order(1)
@@ -102,21 +132,21 @@ public class RelationServiceTest {
 		
 		RelationEntity relation2  = new RelationEntity();
 
-		relation2.setRelationId(secondId);
-		relation2.setUser(userSecond);
-		relation2.setUserFkIdOwnerRelation(userFirst.getUserId());
+		relation2.setUser(userTwo);
+		relation2.setUserFkIdOwnerRelation(1);
+		
 		relationService.save(relation2);
 		
-		assertEquals(userSecond.getUserId(), relation2.getUser().getUserId());
+		assertEquals(2, relation2.getUser().getUserId());
 	}
 	
 	@Test
 	@Order(2)
 	public void testGetRelationsById() {
 
-		List<RelationDTO> relationList = relationService.getRelationsById(secondId);
+		List<RelationDTO> relationList = relationService.getRelationsById(1);
         assertTrue(relationList.size() > 0);
-        assertEquals(secondId, relationList.get(0).getUserIdOwner());
+        assertEquals(1, relationList.get(0).getUserIdOwner());
 
 	}
 	

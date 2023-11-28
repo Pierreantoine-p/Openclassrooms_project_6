@@ -60,19 +60,5 @@ public class RelationController {
 		return new ResponseEntity<>(relationList,HttpStatus.OK);
 	}
 
-	
-	/**
-	 * Get one relation by id_user
-	 * @Param Integer : id
-	 * @return One relation  
-	 */
-	/*
-	@GetMapping("/relation/{userIdOwner}/{userUserId}")
-	public ResponseEntity<RelationDTO> getOneRelationById (@PathVariable Integer userIdOwner, @PathVariable Integer userUserId){
-		logger.info("getOneByMail, params: id={}", userIdOwner);
-		RelationDTO result = relationService.getRelationById(userIdOwner,userUserId);
-		return new ResponseEntity<>(result,HttpStatus.OK);
-	}
-	*/
 
 }

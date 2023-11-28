@@ -35,15 +35,6 @@ public class UserService {
 		return userDTO;
 	}
 
-	@SuppressWarnings("deprecation")
-	public String generateToken(String userEmail) {
-		String secretKey = "yourSecretKey"; 
-		return Jwts.builder()
-				.setSubject(userEmail)
-				.signWith(SignatureAlgorithm.HS256, secretKey)
-				.compact();
-	}
-
 	/**
 	 *Get a list of users
 	 * @return List of users
@@ -113,33 +104,5 @@ public class UserService {
 		}
 		return null;
 	}
-
-
-	/**
-	 * Update a user
-	 * @Param String : mail, 
-	 * @RequestBody userModel
-	 * @return Person update 
-	 */
-	/*
-	public void saveOrUpdate( UserEntity userModel) {
-	     System.out.println("Nom de zeus : "  );
-
-		try {
-			UserEntity user = new UserEntity();
-			user.setUserMail(userModel.getUserMail());
-			String userPassword = userModel.getUserPassword();
-			String hashedPassword = BCrypt.hashpw(userPassword, BCrypt.gensalt(12));
-			System.out.println("hashedPassword : " + hashedPassword);
-			user.setUserPassword(hashedPassword);
-
-			userRepository.save(user);
-		}catch(Exception e) {
-			System.out.println("Nom de zeus : " + e);
-		}
-
-
-	}*/
-
 
 }

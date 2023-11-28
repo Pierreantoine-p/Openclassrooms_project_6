@@ -35,11 +35,11 @@ import com.openclassrooms.paybybuddy.paybybuddy.repository.SoldRepository;
 import com.openclassrooms.paybybuddy.paybybuddy.repository.TransactionRepository;
 import com.openclassrooms.paybybuddy.paybybuddy.repository.UserRepository;
 
-@DirtiesContext
-@RunWith(SpringRunner.class)
 @ActiveProfiles("test")
-@SpringBootTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@SpringBootTest(classes = PaybybuddyApplication.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@Transactional
 public class SoldServiceTest {
 
 	@Autowired
@@ -48,6 +48,8 @@ public class SoldServiceTest {
 	@Autowired
 	private SoldService soldService;
 
+	private static final double DELTA = 1e-15;
+	
 	private Integer firstId = 1;
 	private Integer secondId = 2;
 	private String userFirstMail = "new@mail.fr";
@@ -63,62 +65,48 @@ public class SoldServiceTest {
 	@Transactional
 	void createUser() {
 
-		userFirst = new UserEntity();
-		userSecond = new UserEntity();
-		List<TransactionEntity> transactionUserFirst = new ArrayList<TransactionEntity>();
-		List<TransactionEntity> transactionUserSecond = new ArrayList<TransactionEntity>();
-		List<RelationEntity> listRelationUserFirst = new ArrayList<RelationEntity>();
-		List<RelationEntity> listRelationUserSecond = new ArrayList<RelationEntity>();
-		SoldEntity soldUserSecond = new SoldEntity();
+		  UserEntity userOne = new UserEntity();
+		  userOne.setUserName("toto");
+		  userOne.setUserMail("toto@example.com");
+		  userOne.setUserPassword("123");
+		  
+	        userService.save(userOne);
 
-		userFirst.setUserId(firstId);
-		userFirst.setUserName("new");
-		userFirst.setUserMail(userFirstMail);
-		userFirst.setUserPassword("123456");
-		userFirst.setRelation(listRelationUserFirst);
-		userFirst.setSold(soldUserFirst);
-		userFirst.setTransactions(transactionUserFirst);
-
-		userSecond.setUserId(secondId);
-		userSecond.setUserName("toto");
-		userSecond.setUserMail(userSecondMail);
-		userSecond.setUserPassword("123456");
-		userSecond.setRelation(listRelationUserSecond);
-		userSecond.setSold(soldUserSecond);
-		userSecond.setTransactions(transactionUserSecond);
-
-		userService.save(userFirst);
-		userService.save(userSecond);
-
-
-		soldUserFirst =  soldService.save(userFirst.getUserId());
-
+		  
 	}
 
 	@Test
 	@Order(1)
 	public void testGetSoldById() {	
-		SoldEntity expectedSold = soldService.getById(secondId);
-		assertEquals(secondId,expectedSold.getUserId() );
+		SoldEntity expectedSold = soldService.getById(1);
+		assertEquals(1,expectedSold.getUserId() );
 	}
 	
 	@Test
 	@Order(2)
 	public void testSave() {
-		Integer soldId = 4;
-		SoldEntity expectedSold = soldService.save(soldId);
-		assertEquals(soldId, expectedSold.getUserId());
+		
+		 UserEntity userTwo = new UserEntity();
+		  
+		  userTwo.setUserName("titi");
+		  userTwo.setUserMail("titi@example.com");
+		  userTwo.setUserPassword("123");
+		  
+	        userService.save(userTwo);
+	        
+		SoldEntity expectedSold = soldService.getById(2);
+		assertEquals(2, expectedSold.getSoldId());
 	}
 
 	@Test
 	@Order(3)
 	public void testUpdate() {
 
-		double soldAmount = 20.0;
+		double soldAmount = 40.0;
 		
-		soldService.update(secondId,soldAmount);
-		SoldEntity expectedSold = soldService.getById(secondId);
-		assertEquals(secondId, expectedSold.getUserId());
+		soldService.update(1,soldAmount);
+		SoldEntity expectedSold = soldService.getById(1);
+		assertEquals(1, expectedSold.getUserId());
 
 	}
 
