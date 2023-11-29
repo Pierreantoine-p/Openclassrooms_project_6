@@ -7,6 +7,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -26,6 +27,9 @@ import com.openclassrooms.paybybuddy.paybybuddy.entity.RelationEntity;
 import com.openclassrooms.paybybuddy.paybybuddy.entity.SoldEntity;
 import com.openclassrooms.paybybuddy.paybybuddy.entity.TransactionEntity;
 import com.openclassrooms.paybybuddy.paybybuddy.entity.UserEntity;
+import com.openclassrooms.paybybuddy.paybybuddy.repository.SoldRepository;
+import com.openclassrooms.paybybuddy.paybybuddy.repository.TransactionRepository;
+import com.openclassrooms.paybybuddy.paybybuddy.repository.UserRepository;
 
 @ActiveProfiles("test")
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -40,6 +44,15 @@ public class TransactionServiceTest {
 	@Autowired
 	private UserService userService;
 
+	@Autowired
+	private SoldRepository soldRepository;
+
+	@Autowired
+	private UserRepository userRepository;
+	
+	@Autowired
+	private TransactionRepository transactionRepository;
+	
 	private static final double DELTA = 1e-15;
 
 	private Integer firstId = 1;
@@ -59,7 +72,7 @@ public class TransactionServiceTest {
 	@BeforeAll
 	@Transactional
 	void createUser() {
-
+/*
 		userFirst = new UserEntity();
 		userSecond = new UserEntity();
 		
@@ -68,28 +81,9 @@ public class TransactionServiceTest {
 		List<RelationEntity> listRelationUserFirst = new ArrayList<RelationEntity>();
 		List<RelationEntity> listRelationUserSecond = new ArrayList<RelationEntity>();
 		SoldEntity soldUserFirst = new SoldEntity();
-		SoldEntity soldUserSecond = new SoldEntity();
+		SoldEntity soldUserSecond = new SoldEntity();*/
 
-/*
-		userFirst.setUserId(firstId);
-		userFirst.setUserName("new");
-		userFirst.setUserMail(userFirstMail);
-		userFirst.setUserPassword("123456");
-		userFirst.setRelation(listRelationUserFirst);
-		userFirst.setSold(soldUserFirst);
-		userFirst.setTransactions(listTransactionUserFirst);
 
-		userSecond.setUserId(secondId);
-		userSecond.setUserName("toto");
-		userSecond.setUserMail(userSecondMail);
-		userSecond.setUserPassword("123456");
-		userSecond.setRelation(listRelationUserSecond);
-		userSecond.setSold(soldUserSecond);
-		userSecond.setTransactions(listTransactionUserSecond);
-
-		userService.save(userFirst);
-		userService.save(userSecond);
-				*/
 		
 		  UserEntity userOne = new UserEntity();
 		  UserEntity userTwo = new UserEntity();
@@ -109,6 +103,15 @@ public class TransactionServiceTest {
 		
 		transactionService.save(1, 2, 10, 5, 15, "description");
 	
+	}
+	
+	@AfterAll
+	void cleanUp() {
+		soldRepository.deleteById(1);
+		soldRepository.deleteById(2);
+	    userRepository.deleteById(1);
+	    userRepository.deleteById(2);
+	    transactionRepository.deleteById(1);
 	}
 
 		@Test

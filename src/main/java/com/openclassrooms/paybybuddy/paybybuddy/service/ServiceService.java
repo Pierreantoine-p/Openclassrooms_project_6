@@ -37,7 +37,7 @@ public class ServiceService {
 	 */
 	@Transactional
 	public TransactionEntity transfert(TransfertModelDTO transfertModelDTO) {
-
+		
 		SoldEntity existingSoldOwner = soldRepository.findByUserId(transfertModelDTO.getUseridOwner());		
 		SoldEntity existingSoldRelation = soldRepository.findByUserId(transfertModelDTO.getUserfkIdRelation());	
 
