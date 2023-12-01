@@ -6,40 +6,24 @@ import static org.junit.Assert.assertEquals;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.openclassrooms.paybybuddy.paybybuddy.PaybybuddyApplication;
-import com.openclassrooms.paybybuddy.paybybuddy.entity.RelationEntity;
 import com.openclassrooms.paybybuddy.paybybuddy.entity.SoldEntity;
-import com.openclassrooms.paybybuddy.paybybuddy.entity.TransactionEntity;
 import com.openclassrooms.paybybuddy.paybybuddy.entity.UserEntity;
-import com.openclassrooms.paybybuddy.paybybuddy.repository.RelationRepository;
 import com.openclassrooms.paybybuddy.paybybuddy.repository.SoldRepository;
-import com.openclassrooms.paybybuddy.paybybuddy.repository.TransactionRepository;
 import com.openclassrooms.paybybuddy.paybybuddy.repository.UserRepository;
 
-@ActiveProfiles("test")
+
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @SpringBootTest(classes = PaybybuddyApplication.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@Transactional
 public class SoldServiceTest {
 
 	@Autowired
@@ -48,54 +32,62 @@ public class SoldServiceTest {
 	@Autowired
 	private SoldService soldService;
 
-	private static final double DELTA = 1e-15;
-	
-	private Integer firstId = 1;
-	private Integer secondId = 2;
-	private String userFirstMail = "new@mail.fr";
-	private String userSecondMail = "toto@mail.fr";
+	@Autowired
+	private UserRepository userRepository;
+
+	@Autowired
+	private SoldRepository soldRepository;
 
 	private UserEntity userFirst;
 	private UserEntity userSecond;
 
-	private SoldEntity	soldUserFirst;
-
 
 	@BeforeAll
-	@Transactional
 	void createUser() {
 
-		  UserEntity userOne = new UserEntity();
-		  userOne.setUserName("toto");
-		  userOne.setUserMail("toto@example.com");
-		  userOne.setUserPassword("123");
-		  
-	        userService.save(userOne);
+		userFirst = new UserEntity();
+		userSecond = new UserEntity();
 
-		  
+		userFirst.setUserName("Marty Mcfly");
+		userFirst.setUserMail("marty@example.com");
+		userFirst.setUserPassword("88miles");
+
+		userSecond.setUserName("Doc. Emmet Brown");
+		userSecond.setUserMail("Emmet@example.com");
+		userSecond.setUserPassword("88miles");
+
+		userService.save(userFirst);
+		userService.save(userSecond);
+
+	}
+
+	@AfterAll
+	void cleanUp() {
+		soldRepository.deleteAll();
+		userRepository.deleteAll();
 	}
 
 	@Test
 	@Order(1)
 	public void testGetSoldById() {	
-		SoldEntity expectedSold = soldService.getById(1);
-		assertEquals(1,expectedSold.getUserId() );
+		SoldEntity expectedSold = soldService.getById(userFirst.getUserId());
+		assertEquals(userFirst.getUserId(),expectedSold.getUserId() );
 	}
 	
 	@Test
 	@Order(2)
 	public void testSave() {
 		
-		 UserEntity userTwo = new UserEntity();
+		 UserEntity userThree = new UserEntity();
 		  
-		  userTwo.setUserName("titi");
-		  userTwo.setUserMail("titi@example.com");
-		  userTwo.setUserPassword("123");
+		 userThree.setUserName("Biff Tannen");
+		 userThree.setUserMail("Biff@example.com");
+		  userThree.setUserPassword("88miles");
 		  
-	        userService.save(userTwo);
+	        userService.save(userThree);
 	        
-		SoldEntity expectedSold = soldService.getById(2);
-		assertEquals(2, expectedSold.getSoldId());
+		SoldEntity expectedSold = soldService.getById(userThree.getUserId());
+		assertEquals(userThree.getUserId(), expectedSold.getUserId());
 	}
 
 	@Test
@@ -104,9 +96,9 @@ public class SoldServiceTest {
 
 		double soldAmount = 40.0;
 		
-		soldService.update(1,soldAmount);
-		SoldEntity expectedSold = soldService.getById(1);
-		assertEquals(1, expectedSold.getUserId());
+		soldService.update(userFirst.getUserId(),soldAmount);
+		SoldEntity expectedSold = soldService.getById(userFirst.getUserId());
+		assertEquals(userFirst.getUserId(), expectedSold.getUserId());
 
 	}
 

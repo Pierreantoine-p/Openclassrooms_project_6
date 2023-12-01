@@ -1,11 +1,11 @@
 package com.openclassrooms.paybybuddy.paybybuddy.controller;
 
-import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -15,21 +15,18 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.openclassrooms.paybybuddy.paybybuddy.PaybybuddyApplication;
 import com.openclassrooms.paybybuddy.paybybuddy.entity.RelationEntity;
-import com.openclassrooms.paybybuddy.paybybuddy.entity.SoldEntity;
-import com.openclassrooms.paybybuddy.paybybuddy.entity.TransactionEntity;
 import com.openclassrooms.paybybuddy.paybybuddy.entity.UserEntity;
 import com.openclassrooms.paybybuddy.paybybuddy.model.RelationDTO;
+import com.openclassrooms.paybybuddy.paybybuddy.repository.RelationRepository;
+import com.openclassrooms.paybybuddy.paybybuddy.repository.SoldRepository;
+import com.openclassrooms.paybybuddy.paybybuddy.repository.UserRepository;
 import com.openclassrooms.paybybuddy.paybybuddy.service.RelationService;
 import com.openclassrooms.paybybuddy.paybybuddy.service.UserService;
 
-@DirtiesContext
-@ActiveProfiles("test")
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @SpringBootTest(classes = PaybybuddyApplication.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -37,65 +34,66 @@ public class RelationControllerTest {
 
 	@Autowired
 	private RelationController relationController;
+
 	@Autowired
 	private RelationService relationService;
-	
+
 	@Autowired
 	private UserService userService;
-	
-	private Integer firstId = 1;
-	private Integer secondId = 2;
 
-	private String userFirstMail = "new@mail.fr";
-	private String userSecondMail = "toto@mail.fr";
-	
+	@Autowired
+	private UserRepository userRepository;
+
+	@Autowired
+	private SoldRepository soldRepository;
+
+	@Autowired
+	private RelationRepository relationRepository;
+
+
 	private UserEntity userFirst;
 	private UserEntity userSecond;
-	
 	private RelationEntity	relationUserFirst;
+	private List<RelationEntity> listRelationUserFirst;
 
-	
 	@BeforeAll
 	@Transactional
 	void createUser() {
 
+		listRelationUserFirst = new ArrayList<RelationEntity>();
+
 		userFirst = new UserEntity();
 		userSecond = new UserEntity();
-		List<TransactionEntity> transactionUserFirst = new ArrayList<TransactionEntity>();
-		List<TransactionEntity> transactionUserSecond = new ArrayList<TransactionEntity>();
-		List<RelationEntity> listRelationUserFirst = new ArrayList<RelationEntity>();
-		List<RelationEntity> listRelationUserSecond = new ArrayList<RelationEntity>();
-		SoldEntity soldUserFirst = new SoldEntity();
-		SoldEntity soldUserSecond = new SoldEntity();
 
-		
-		userFirst.setUserId(firstId);
-		userFirst.setUserName("new");
-		userFirst.setUserMail(userFirstMail);
-		userFirst.setUserPassword("123456");
+		userFirst.setUserName("Marty Mcfly");
+		userFirst.setUserMail("marty@example.com");
+		userFirst.setUserPassword("88miles");
 		userFirst.setRelation(listRelationUserFirst);
-		userFirst.setSold(soldUserFirst);
-		userFirst.setTransactions(transactionUserFirst);
 
-		userSecond.setUserId(secondId);
-		userSecond.setUserName("toto");
-		userSecond.setUserMail(userSecondMail);
-		userSecond.setUserPassword("123456");
-		userSecond.setRelation(listRelationUserSecond);
-		userSecond.setSold(soldUserSecond);
-		userSecond.setTransactions(transactionUserSecond);
-		
+		userSecond.setUserName("Doc. Emmet Brown");
+		userSecond.setUserMail("Emmet@example.com");
+		userSecond.setUserPassword("88miles");
+
 		userService.save(userFirst);
 		userService.save(userSecond);
-		
+
 		relationUserFirst  = new RelationEntity();
 
-		relationUserFirst.setRelationId(firstId);
-		relationUserFirst.setUser(userFirst);
-		relationUserFirst.setUserFkIdOwnerRelation(userSecond.getUserId());
-		
-		relationService.save(relationUserFirst);
+		relationUserFirst.setUser(userSecond);
+		relationUserFirst.setUserFkIdOwnerRelation(userFirst.getUserId());
 
+		relationService.save(relationUserFirst);
+		listRelationUserFirst.add(relationUserFirst);
+		
+		
+
+	}
+
+	@AfterAll
+	void cleanUp() {
+		soldRepository.deleteAll();
+		relationRepository.deleteAll();
+		userRepository.deleteAll();
 	}
 	
 	@Test
@@ -103,22 +101,21 @@ public class RelationControllerTest {
 	public void testSave() {
 		HttpStatus expectedResponse = HttpStatus.OK;
 
-		RelationEntity relation2  = new RelationEntity();
-
-		relation2.setRelationId(secondId);
-		relation2.setUser(userSecond);
-		relation2.setUserFkIdOwnerRelation(userFirst.getUserId());
-		ResponseEntity<RelationEntity> relationEntity = relationController.save(relation2);
+		RelationEntity relation  = new RelationEntity();
+		
+		relation.setUser(userFirst);
+		relation.setUserFkIdOwnerRelation(userSecond.getUserId());
+		ResponseEntity<RelationEntity> relationEntity = relationController.save(relation);
 		
 		assertEquals(expectedResponse, relationEntity.getStatusCode());
 	}
-	@Test
 	
+	@Test
 	@Order(2)
 	public void testGetRelationsById() {
 		HttpStatus expectedResponse = HttpStatus.OK;
 
-		ResponseEntity<List<RelationDTO>> relationDTO= relationController.getAllRelationById(secondId);
+		ResponseEntity<List<RelationDTO>> relationDTO= relationController.getAllRelationById(userSecond.getUserId());
 		assertEquals(expectedResponse, relationDTO.getStatusCode());
 
 	}

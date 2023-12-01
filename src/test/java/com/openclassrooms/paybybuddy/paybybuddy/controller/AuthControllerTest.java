@@ -1,10 +1,6 @@
-package com.openclassrooms.paybybuddy.paybybuddy.service;
+package com.openclassrooms.paybybuddy.paybybuddy.controller;
 
-import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -14,23 +10,23 @@ import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import com.openclassrooms.paybybuddy.paybybuddy.PaybybuddyApplication;
-import com.openclassrooms.paybybuddy.paybybuddy.entity.RelationEntity;
 import com.openclassrooms.paybybuddy.paybybuddy.entity.UserEntity;
-import com.openclassrooms.paybybuddy.paybybuddy.model.RelationDTO;
-import com.openclassrooms.paybybuddy.paybybuddy.repository.RelationRepository;
+import com.openclassrooms.paybybuddy.paybybuddy.model.UserDTO;
 import com.openclassrooms.paybybuddy.paybybuddy.repository.SoldRepository;
 import com.openclassrooms.paybybuddy.paybybuddy.repository.UserRepository;
+import com.openclassrooms.paybybuddy.paybybuddy.service.UserService;
 
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @SpringBootTest(classes = PaybybuddyApplication.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class RelationServiceTest {
-
+public class AuthControllerTest {
+	
 	@Autowired
-	private RelationService relationService;
+	private AuthController authController;
 
 	@Autowired
 	private UserService userService;
@@ -41,20 +37,12 @@ public class RelationServiceTest {
 	@Autowired
 	private SoldRepository soldRepository;
 
-	@Autowired
-	private RelationRepository relationRepository;
-
-
 	private UserEntity userFirst;
 	private UserEntity userSecond;
-	private RelationEntity	relationUserFirst;
-	private List<RelationEntity> listRelationUserFirst;
+
 
 	@BeforeAll
-	@Transactional
 	void createUser() {
-
-		listRelationUserFirst = new ArrayList<RelationEntity>();
 
 		userFirst = new UserEntity();
 		userSecond = new UserEntity();
@@ -62,7 +50,6 @@ public class RelationServiceTest {
 		userFirst.setUserName("Marty Mcfly");
 		userFirst.setUserMail("marty@example.com");
 		userFirst.setUserPassword("88miles");
-		userFirst.setRelation(listRelationUserFirst);
 
 		userSecond.setUserName("Doc. Emmet Brown");
 		userSecond.setUserMail("Emmet@example.com");
@@ -71,45 +58,22 @@ public class RelationServiceTest {
 		userService.save(userFirst);
 		userService.save(userSecond);
 
-		relationUserFirst  = new RelationEntity();
-
-		relationUserFirst.setUser(userSecond);
-		relationUserFirst.setUserFkIdOwnerRelation(userFirst.getUserId());
-
-		relationService.save(relationUserFirst);
-		listRelationUserFirst.add(relationUserFirst);
-		
-		
-
 	}
 
 	@AfterAll
 	void cleanUp() {
 		soldRepository.deleteAll();
-		relationRepository.deleteAll();
 		userRepository.deleteAll();
 	}
-
+	
 	@Test
 	@Order(1)
-	public void testSave() {
+	public void testAuth(){
+		HttpStatus expectedResponse = HttpStatus.OK;
 
-		RelationEntity relation2  = new RelationEntity();
-
-		relation2.setUser(userFirst);
-		relation2.setUserFkIdOwnerRelation(userSecond.getUserId());
-
-		relationService.save(relation2);
-
-		assertEquals(userSecond.getUserId(), relation2.getUserFkIdOwnerRelation());
-	}
-
-	@Test
-	@Order(2)
-	public void testGetRelationsById() {
-
-		List<RelationDTO> relationList = relationService.getRelationsById(userFirst.getUserId());
-		assertTrue(relationList.size() > 0);
+		ResponseEntity<UserDTO> user = authController.auth(userFirst.getUserMail(), userFirst.getUserPassword());
+		
+		assertEquals(expectedResponse, user.getStatusCode());
 
 	}
 

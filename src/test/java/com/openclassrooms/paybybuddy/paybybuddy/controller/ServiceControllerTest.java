@@ -1,10 +1,6 @@
-package com.openclassrooms.paybybuddy.paybybuddy.service;
+package com.openclassrooms.paybybuddy.paybybuddy.controller;
 
-import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -14,23 +10,29 @@ import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
-
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import com.openclassrooms.paybybuddy.paybybuddy.PaybybuddyApplication;
-import com.openclassrooms.paybybuddy.paybybuddy.entity.RelationEntity;
 import com.openclassrooms.paybybuddy.paybybuddy.entity.UserEntity;
-import com.openclassrooms.paybybuddy.paybybuddy.model.RelationDTO;
+import com.openclassrooms.paybybuddy.paybybuddy.model.TransfertModelDTO;
 import com.openclassrooms.paybybuddy.paybybuddy.repository.RelationRepository;
 import com.openclassrooms.paybybuddy.paybybuddy.repository.SoldRepository;
+import com.openclassrooms.paybybuddy.paybybuddy.repository.TransactionRepository;
 import com.openclassrooms.paybybuddy.paybybuddy.repository.UserRepository;
+import com.openclassrooms.paybybuddy.paybybuddy.service.ServiceService;
+import com.openclassrooms.paybybuddy.paybybuddy.service.SoldService;
+import com.openclassrooms.paybybuddy.paybybuddy.service.UserService;
 
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @SpringBootTest(classes = PaybybuddyApplication.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class RelationServiceTest {
-
+public class ServiceControllerTest {
+	
 	@Autowired
-	private RelationService relationService;
+	private ServiceController serviceController;
+
+
+
 
 	@Autowired
 	private UserService userService;
@@ -40,46 +42,39 @@ public class RelationServiceTest {
 
 	@Autowired
 	private SoldRepository soldRepository;
-
+	
 	@Autowired
 	private RelationRepository relationRepository;
-
+	
+	@Autowired
+	private TransactionRepository transactionRepository;
+	
+	@Autowired
+	private SoldService soldService;
 
 	private UserEntity userFirst;
 	private UserEntity userSecond;
-	private RelationEntity	relationUserFirst;
-	private List<RelationEntity> listRelationUserFirst;
+
 
 	@BeforeAll
-	@Transactional
 	void createUser() {
-
-		listRelationUserFirst = new ArrayList<RelationEntity>();
 
 		userFirst = new UserEntity();
 		userSecond = new UserEntity();
 
+
 		userFirst.setUserName("Marty Mcfly");
 		userFirst.setUserMail("marty@example.com");
 		userFirst.setUserPassword("88miles");
-		userFirst.setRelation(listRelationUserFirst);
+
 
 		userSecond.setUserName("Doc. Emmet Brown");
 		userSecond.setUserMail("Emmet@example.com");
 		userSecond.setUserPassword("88miles");
+		
 
 		userService.save(userFirst);
 		userService.save(userSecond);
-
-		relationUserFirst  = new RelationEntity();
-
-		relationUserFirst.setUser(userSecond);
-		relationUserFirst.setUserFkIdOwnerRelation(userFirst.getUserId());
-
-		relationService.save(relationUserFirst);
-		listRelationUserFirst.add(relationUserFirst);
-		
-		
 
 	}
 
@@ -87,30 +82,31 @@ public class RelationServiceTest {
 	void cleanUp() {
 		soldRepository.deleteAll();
 		relationRepository.deleteAll();
+		transactionRepository.deleteAll();
 		userRepository.deleteAll();
 	}
-
+	
 	@Test
 	@Order(1)
-	public void testSave() {
+	public void testTransfer() {
+		HttpStatus expectedResponse = HttpStatus.OK;
+		
+		TransfertModelDTO transfertModelDTO = new TransfertModelDTO();
+		
+		double amount = 40;
 
-		RelationEntity relation2  = new RelationEntity();
+		soldService.update(userFirst.getUserId(),amount);
+		
+		transfertModelDTO.setUseridOwner(userFirst.getUserId());
+		transfertModelDTO.setUserfkIdRelation(userSecond.getUserId());
+		transfertModelDTO.setAmount(3.99);
+		transfertModelDTO.setDescription("Sample_desciption");
 
-		relation2.setUser(userFirst);
-		relation2.setUserFkIdOwnerRelation(userSecond.getUserId());
+		ResponseEntity<TransfertModelDTO>  transactionEntity = serviceController.transfer(transfertModelDTO);
 
-		relationService.save(relation2);
-
-		assertEquals(userSecond.getUserId(), relation2.getUserFkIdOwnerRelation());
-	}
-
-	@Test
-	@Order(2)
-	public void testGetRelationsById() {
-
-		List<RelationDTO> relationList = relationService.getRelationsById(userFirst.getUserId());
-		assertTrue(relationList.size() > 0);
+		assertEquals(expectedResponse, transactionEntity.getStatusCode());
 
 	}
 
 }
+

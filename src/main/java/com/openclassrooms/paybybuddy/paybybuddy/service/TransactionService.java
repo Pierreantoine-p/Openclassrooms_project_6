@@ -1,6 +1,7 @@
 package com.openclassrooms.paybybuddy.paybybuddy.service;
 
 import java.sql.Timestamp;
+import java.util.Collections;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,9 +42,13 @@ public class TransactionService {
 	/**
 	 *Get all transaction by userId
 	 *@Param Integer : id
-	 * @return transactions sort by userId 
+	 * @return transactions f by userId 
 	 */
 	public List<TransactionEntity> getAllById(Integer id){
-		return transactionRepository.findByUserIdOwner(id);
+		List<TransactionEntity> transactions = transactionRepository.findByUserIdOwner(id);
+	    if (!transactions.isEmpty()) {
+	        return transactions;
+	    }
+	    return Collections.emptyList(); 
 	}
 }

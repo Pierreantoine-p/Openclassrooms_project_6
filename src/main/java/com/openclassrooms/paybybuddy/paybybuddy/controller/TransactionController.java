@@ -41,7 +41,10 @@ public class TransactionController {
 	@GetMapping("/{id}")
 	public ResponseEntity<List<TransactionEntity>> getAllById (@PathVariable Integer id){
 		logger.info("getallById, params: id={}", id);
+		System.out.println("here : "  );
 		List<TransactionEntity> result = transactionService.getAllById(id);
+		System.out.println("result : "  + result);
+
 		logger.info("result: result={}", result );
 		return new ResponseEntity<>(result,HttpStatus.OK);
 	}

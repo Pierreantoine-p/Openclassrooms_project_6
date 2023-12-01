@@ -22,7 +22,7 @@ import com.openclassrooms.paybybuddy.paybybuddy.service.SoldService;
 public class SoldController {
 
 	@Autowired
-	private SoldService soldService;
+	private static SoldService soldService;
 
 	private static final Logger logger = LogManager.getLogger(SoldController.class);
 
@@ -37,7 +37,7 @@ public class SoldController {
 	 * @return One all transaction sort by userId 
 	 */
 	@GetMapping("/{id}")
-	public ResponseEntity<SoldEntity> getById (@PathVariable Integer id){
+	public static ResponseEntity<SoldEntity> getById (@PathVariable Integer id){
 		logger.info("getallById, params: id={}", id);
 		SoldEntity result = soldService.getById(id);
 		logger.info("result: result={}", result );
@@ -51,7 +51,7 @@ public class SoldController {
 	 * @return sold update 
 	 */
 	@PutMapping("/{id}/{amount}")
-	public void update(@PathVariable(name = "id")Integer id,@PathVariable(name = "amount")double amount)  {
+	public static void update(@PathVariable(name = "id")Integer id,@PathVariable(name = "amount")double amount)  {
 		logger.info("update, params: id={}, params amount={}", id, amount);
 		soldService.update(id, amount);
 	}
