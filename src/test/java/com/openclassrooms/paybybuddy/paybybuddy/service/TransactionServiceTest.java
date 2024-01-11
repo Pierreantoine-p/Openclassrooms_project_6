@@ -45,7 +45,7 @@ public class TransactionServiceTest {
 	private static final double DELTA = 1e-15;
 	private UserEntity userFirst;
 	private UserEntity userSecond;
-	private List<TransactionEntity> listTransaction = new ArrayList();
+	private List<TransactionEntity> listTransaction = new ArrayList<TransactionEntity>();
 
 
 
