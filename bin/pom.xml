@@ -5,14 +5,14 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.1.4</version>
+		<version>3.1.3</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.openclassrooms.paybybuddy</groupId>
-	<artifactId>paybybuddy</artifactId>
+	<groupId>com.openclassrooms.paymybuddy</groupId>
+	<artifactId>paymybuddy</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>paybybuddy</name>
-	<description>project spring boot for paybybuddy</description>
+	<name>paymybuddy</name>
+	<description>App &quot;Pay My Buddy&quot;</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
@@ -24,7 +24,11 @@
 		<dependency>
 		    <groupId>mysql</groupId>
 		    <artifactId>mysql-connector-java</artifactId>
-		    <version>8.0.28</version>
+		    <version>8.0.28</version> <!-- Remplacez cette version par la version de MySQL que vous utilisez -->
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -36,24 +40,6 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-		    <groupId>org.springframework.security</groupId>
-		    <artifactId>spring-security-crypto</artifactId>
-		</dependency>
-				<dependency>
-			<groupId>com.github.spotbugs</groupId>
-			<artifactId>spotbugs</artifactId>
-			<version>4.7.3</version>
-		</dependency>
-		<dependency>
-        	<groupId>org.springframework.boot</groupId>
-        	<artifactId>spring-boot-starter-actuator</artifactId>
-    	</dependency>
-		<dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <scope>test</scope>
@@ -63,18 +49,46 @@
 			<artifactId>log4j-core</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-junit-jupiter</artifactId>
+			<scope>test</scope>
+		</dependency>
+		
+		  <dependency>
 	        <groupId>org.springframework.boot</groupId>
 	        <artifactId>spring-boot-starter-parent</artifactId>
-	        <version>2.5.4</version> 
+	        <version>2.5.4</version> <!-- Utilisez la version Spring Boot la plus récente -->
 	        <type>pom</type>
-	    </dependency> 
+	    </dependency>   
 	</dependencies>
-
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<exclude>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+						</exclude>
+					</excludes>
+				</configuration>
 			</plugin>
 			 <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -90,9 +104,14 @@
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.8.8</version>
-                 
+                <configuration>
+                    <excludes>
+                        <exclude>com/openclassrooms/safetinet/model/*</exclude>
+                        <exclude>com/openclassrooms/safetinet/model/DTO/*</exclude>
+                    </excludes>
+                </configuration>
                 <executions>
-                   <execution>
+                    <execution>
                         <goals>
                             <goal>prepare-agent</goal>
                         </goals>
@@ -119,17 +138,6 @@
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.8.8</version>
-                <!--
-                <configuration>
-                    <excludes>
-						<exclude> **/*RelationDTO.class </exclude>
-						<exclude> **/*TransfertModel.class </exclude>
-						<exclude> com/openclassrooms/paybybuddy/paybybuddy/model/UserDTO.java </exclude>
-						<exclude> com/openclassrooms/paybybuddy/paybybuddy/model/*.java </exclude>
-
-					</excludes>
-                </configuration> -->
-               
             </plugin>
         </plugins>
     </reporting>
