@@ -55,3 +55,25 @@ Les endpoints exposés par l'API peuvent être trouvés dans la documentation de
 <h2>Configuration</h2>
 
 Les configurations du serveur et de l'application peuvent être modifiées dans les fichiers de configuration Spring (application.properties ou application.yml) situés dans le répertoire src/main/resources.
+
+<h2>Vérification de la couverture des tests</h2>
+
+Pour vérifier la couverture des tests, suivez ces étapes simples :
+
+1. Ouvrez une console/terminal.
+
+2. Assurez-vous que Maven est installé sur votre machine. Sinon, vous pouvez le télécharger à partir de [https://maven.apache.org/download.cgi](https://maven.apache.org/download.cgi) et suivre les instructions d'installation.
+
+3. Accédez au répertoire racine du projet.
+
+4. Exécutez la commande suivante pour générer les rapports de couverture des tests :
+    ```bash
+    mvn site
+    ```
+
+5. Une fois que la construction est terminée, accédez au répertoire `target/site` de votre projet.
+
+6. Ouvrez le fichier `index.html` dans votre navigateur préféré.
+
+7. Recherchez la section "Coverage" ou "Couverture des tests" pour visualiser les détails de la couverture des tests.
+
