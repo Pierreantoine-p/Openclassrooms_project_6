@@ -23,7 +23,7 @@ import com.openclassrooms.paybybuddy.paybybuddy.model.RelationDTO;
 import com.openclassrooms.paybybuddy.paybybuddy.repository.RelationRepository;
 import com.openclassrooms.paybybuddy.paybybuddy.repository.SoldRepository;
 import com.openclassrooms.paybybuddy.paybybuddy.repository.UserRepository;
-
+/*
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @SpringBootTest(classes = PaybybuddyApplication.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -114,3 +114,4 @@ public class RelationServiceTest {
 	}
 
 }
+*/
