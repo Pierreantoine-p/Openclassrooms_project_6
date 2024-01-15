@@ -11,6 +11,6 @@ public interface RelationRepository extends CrudRepository<RelationEntity, Integ
 
 
 	List<RelationEntity> findAllByUserFkIdOwnerRelation (Integer userId);
-
+	//List<RelationEntity> deleteAllByUserFkIdOwnerRelation (Integer userId);
 
 }
