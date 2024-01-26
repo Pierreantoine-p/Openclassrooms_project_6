@@ -51,7 +51,6 @@ public class RelationServiceTest {
 	private List<RelationEntity> listRelationUserFirst;
 
 	@BeforeAll
-	@Transactional
 	void createUser() {
 
 		listRelationUserFirst = new ArrayList<RelationEntity>();

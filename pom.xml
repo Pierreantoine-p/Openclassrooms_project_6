@@ -69,7 +69,6 @@
 	        <type>pom</type>
 	    </dependency> 
 	</dependencies>
-
 	<build>
 		<plugins>
 			<plugin>
@@ -90,7 +89,6 @@
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.8.8</version>
-                 
                 <executions>
                    <execution>
                         <goals>
@@ -118,18 +116,13 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.8</version>
-                <!--
+                  <version>0.8.8</version>
                 <configuration>
                     <excludes>
-						<exclude> **/*RelationDTO.class </exclude>
-						<exclude> **/*TransfertModel.class </exclude>
-						<exclude> com/openclassrooms/paybybuddy/paybybuddy/model/UserDTO.java </exclude>
-						<exclude> com/openclassrooms/paybybuddy/paybybuddy/model/*.java </exclude>
-
+						<exclude> **/*DTO.* </exclude>
+						<exclude> **/*Entity.* </exclude>
 					</excludes>
-                </configuration> -->
-               
+                </configuration> 
             </plugin>
         </plugins>
     </reporting>
