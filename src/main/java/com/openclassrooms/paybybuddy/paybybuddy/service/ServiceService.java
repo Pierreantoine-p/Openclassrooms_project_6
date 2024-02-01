@@ -52,11 +52,9 @@ public class ServiceService {
 
 		if(existingSoldOwner.getSoldSum() >= sumFinal) {
 			double newValueOwner = existingSoldOwner.getSoldSum() - sumFinal ;
-			System.out.println("newValueOwner: " + newValueOwner);
 			soldService.update(transfertModelDTO.getUseridOwner(), newValueOwner);
 
 			double newValueRelation = existingSoldRelation.getSoldSum() + sum;
-			System.out.println("newValueRelation : " + newValueRelation);
 			soldService.update(transfertModelDTO.getUserfkIdRelation(), newValueRelation);
 			result = transactionService.save(transfertModelDTO.getUseridOwner(),transfertModelDTO.getUserfkIdRelation(),sum,fee,sumFinal,transfertModelDTO.getDescription());
 		}else {

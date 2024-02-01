@@ -28,6 +28,7 @@ public class TransactionService {
 	 */
 	public TransactionEntity save (Integer idOwner, Integer idTransaction, double sum, double fee, double sumFinal, String description){
 		TransactionEntity transactionEntity = new TransactionEntity();
+		
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 		transactionEntity.setUserIdOwner(idOwner);
 		transactionEntity.setUserIdTransaction(idTransaction);
@@ -36,6 +37,8 @@ public class TransactionService {
 		transactionEntity.setTransactionFee(fee);
 		transactionEntity.setTransactionSumFinal(sumFinal);
 		transactionEntity.setTransactionDescription(description);
+		
+		System.out.println("Nom de zeus : " + transactionEntity);
 		return transactionRepository.save(transactionEntity);
 	}
 	
