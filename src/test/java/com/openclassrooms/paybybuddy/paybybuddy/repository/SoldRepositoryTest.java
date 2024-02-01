@@ -10,6 +10,8 @@ import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+
 import com.openclassrooms.paybybuddy.paybybuddy.PaybybuddyApplication;
 import com.openclassrooms.paybybuddy.paybybuddy.entity.SoldEntity;
 import com.openclassrooms.paybybuddy.paybybuddy.entity.UserEntity;
@@ -19,6 +21,7 @@ import com.openclassrooms.paybybuddy.paybybuddy.service.UserService;
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @SpringBootTest(classes = PaybybuddyApplication.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@ActiveProfiles("test")
 public class SoldRepositoryTest {
 
 	@Autowired
